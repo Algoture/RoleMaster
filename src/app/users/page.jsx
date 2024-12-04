@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
 import clsx from "clsx";
 import { usersData } from "../utils/DummyData";
 import Image from "next/image";
+import { ResizeContext } from "@/app/utils/ResizeContext";
 
 function UserManagement() {
+  const { isMobile } = useContext(ResizeContext);
   const [users, setUsers] = useState(usersData);
   const [isEditing, setIsEditing] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
