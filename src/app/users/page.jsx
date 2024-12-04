@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { DeleteIcon, EditIcon } from "../Components/Icons";
+import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
 import clsx from "clsx";
 import { usersData } from "../utils/DummyData";
 import Image from "next/image";
@@ -44,24 +44,22 @@ function UserManagement() {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-between">
-        <h2 className="text-2xl font-semibold mb-4">User Management</h2>
-        <button
-          onClick={() => {
-            setIsAdding(true);
-            setIsEditing(true);
-            setEditingUser({
-              name: "",
-              email: "",
-              role: "Viewer",
-              status: "Active",
-            });
-          }}
-          className="mb-4 bg-accent text-white px-4 py-2 rounded-full"
-        >
-          Add New User
-        </button>
-      </div>
+      <button
+        onClick={() => {
+          setIsAdding(true);
+          setIsEditing(true);
+          setEditingUser({
+            name: "",
+            email: "",
+            role: "Viewer",
+            status: "Active",
+          });
+        }}
+        className="mb-4 flex float-right gap-1 items-center bg-accent text-white px-4 py-2 rounded-full"
+      >
+        <AddIcon height={20} width={20} />
+        Add User
+      </button>
       <table className="min-w-full table-auto border-collapse">
         <thead>
           <tr>
