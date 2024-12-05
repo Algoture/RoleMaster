@@ -1,17 +1,35 @@
 "use client";
-import React, { useState, useContext } from "react";
-import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
+import React, { useState } from "react";
+import {
+  AddIcon,
+  DeleteIcon,
+  EditIcon,
+  WarningIcon,
+} from "../Components/Icons";
 import clsx from "clsx";
 import { usersData } from "../utils/DummyData";
 import Image from "next/image";
-import { ResizeContext } from "@/app/utils/ResizeContext";
 
 function UserManagement() {
-  const { isMobile } = useContext(ResizeContext);
   const [users, setUsers] = useState(usersData);
   const [isEditing, setIsEditing] = useState(false);
-  const [editingUser, setEditingUser] = useState(null);
+  const [editingUser, setEditingUser] = useState("");
   const [isAdding, setIsAdding] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
+
+  const handleDeletion = (user) => {
+    setUserToDelete(user);
+    setIsDeleting(true);
+  };
+
+  const handleConfirmDeletion = () => {
+    if (userToDelete) {
+      handleDeleteUser(userToDelete.id);
+      setUserToDelete(null);
+      setIsDeleting(false);
+    }
+  };
 
   const handleEditUser = (user) => {
     setIsEditing(true);
@@ -54,6 +72,8 @@ function UserManagement() {
             name: "",
             email: "",
             role: "Viewer",
+            img:
+              "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29uYXxlbnwwfHwwfHx8MA%3D%3D",
             status: "Active",
           });
         }}
@@ -69,6 +89,7 @@ function UserManagement() {
             <th className="px-4 py-2 border-b">Email</th>
             <th className="px-4 py-2 border-b">Role</th>
             <th className="px-4 py-2 border-b">Status</th>
+            <th className="px-4 py-2 border-b">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -113,7 +134,7 @@ function UserManagement() {
                 >
                   <div
                     className={clsx(
-                      "rounded-full  size-2",
+                      "rounded-full size-2",
                       user.status === "Active" ? "bg-green-300" : "bg-red-300"
                     )}
                   ></div>
@@ -122,8 +143,8 @@ function UserManagement() {
               </td>
               <td className="px-4 py-2 border-b">
                 <button
-                  onClick={() => handleDeleteUser(user.id)}
-                  className=" text-black py-1 "
+                  onClick={() => handleDeletion(user)}
+                  className="text-black py-1"
                 >
                   <DeleteIcon height={25} width={25} />
                 </button>
@@ -139,6 +160,38 @@ function UserManagement() {
         </tbody>
       </table>
 
+      {isDeleting && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="text-center bg-slate-100 w-fit flex flex-col p-8 items-center justify-center rounded-xl">
+            <div className="bg-red-300 rounded-full mb-4 p-4 w-fit">
+              <WarningIcon width={50} height={50} />
+            </div>
+            <h1 className="text-2xl font-semibold mb-4">Delete User</h1>
+            <p>
+              You're going to delete this user.
+              <br /> Are you sure?
+            </p>
+            <div className="flex justify-between w-full mt-4">
+              <button
+                onClick={() => {
+                  setIsDeleting(false);
+                  setUserToDelete(null);
+                }}
+                className="bg-gray-500 text-white px-8 py-2 rounded-full"
+              >
+                No
+              </button>
+              <button
+                onClick={handleConfirmDeletion}
+                className="bg-red-500 text-white px-6 py-2 rounded-full"
+              >
+                Yes, Delete!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {isEditing && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded shadow-md w-96">
@@ -153,6 +206,7 @@ function UserManagement() {
                   name: e.target.name.value,
                   email: e.target.email.value,
                   role: e.target.role.value,
+                  img: ""||null,
                   status: "Active",
                 };
                 handleSaveUser(user);

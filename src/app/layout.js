@@ -1,6 +1,5 @@
-import Sidebar from "./Components/Sidebar";
+import {Sidebar} from "./Components/Sidebar";
 import "./globals.css";
-import { ResizeProvider } from "./utils/ResizeContext";
 
 export const metadata = {
   title: "RoleMaster",
@@ -10,11 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="antialiased xl:ml-56">
-        <ResizeProvider>
-          <Sidebar />
-          {children}
-        </ResizeProvider>
+      <body className={"antialiased transition-all ml-56"}>
+        <Sidebar />
+        {children}
       </body>
     </html>
   );
