@@ -4,6 +4,7 @@ import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
 import { DeleteModal, EditingModal } from "../Components/Modals";
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "../Components/SearchBar";
+import { toast } from "react-hot-toast";
 import clsx from "clsx";
 
 function UserManagement() {
@@ -107,6 +108,7 @@ function UserManagement() {
       handleDeleteUser(userToDelete.id);
       setUserToDelete(null);
       setIsDeleting(false);
+      toast.success("User Deleted !");
     }
   };
 
@@ -120,14 +122,15 @@ function UserManagement() {
 
   return (
     <div className="p-2 md:ml-44">
-      <div className="flex justify-between px-4 sm:flex-row">
+      <div className="m-4 flex flex-col sm:flex-row sm:flex-wrap  justify-between gap-4 items-center">
         <SearchBar
           handleSearch={(e) => setSearch(e.target.value)}
           search={search}
+          className="flex-1 w-full sm:w-auto"
         />
         <button
           onClick={handleAddUser}
-          className="mb-4 flex float-right gap-1 items-center bg-accent text-white px-2 py-1 rounded-full"
+          className="flex items-center justify-center gap-2 bg-accent text-white px-4 py-2 rounded-full sm:w-auto"
         >
           <AddIcon height={20} width={20} /> Add User
         </button>
@@ -139,26 +142,55 @@ function UserManagement() {
             <th>Name</th>
             <th className="hidden lg:table-cell">Email</th>
             <th>Role</th>
-            <th className="hidden sm:table-cell">Status</th>
+            <th className="theader hidden sm:table-cell">Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredUsers.map((user) => (
             <tr key={user.id}>
-              <td className="px-4 py-2 border-b">{user.name}</td>
+              <td className="px-4 py-2 border-b">
+                <div className="flex items-center gap-2">
+                  {user.name}
+                  <dd className="sm:hidden">
+                    <button
+                      onClick={() => handleToggleStatus(user.id)}
+                      className={clsx(
+                        "px-2  rounded-full gap-1 size-4  font-semibold flex items-center text-white",
+                        user.status === "Active"
+                          ? "bg-green-500  "
+                          : "bg-red-500"
+                      )}
+                    >
+                      <div
+                        className={clsx(
+                          "rounded-full size-2",
+                          user.status === "Active"
+                            ? "bg-green-300"
+                            : "bg-red-300"
+                        )}
+                      ></div>
+                    </button>
+                  </dd>
+                </div>
+                <dl className="lg:hidden">
+                  <dd>{user.email}</dd>
+                </dl>
+              </td>
               <td className="px-4 py-2 border-b hidden lg:table-cell">
                 {user.email}
               </td>
               <td className="px-4 py-2 border-b">
                 <span
                   className={clsx(
-                    "px-2 py-1 border-b rounded-full",
+                    "px-2 py-1 border-b rounded-full text-sm font-semibold",
                     user.role === "Admin"
-                      ? "bg-violet-200 text-violet-700 text-sm font-semibold"
+                      ? "bg-violet-200 text-violet-700"
                       : user.role === "Editor"
-                      ? "bg-blue-100 text-blue-700 text-sm font-semibold"
-                      : "bg-yellow-200 text-yellow-600 text-sm font-semibold"
+                      ? "bg-blue-100 text-blue-700"
+                      : user.role === "Viewer"
+                      ? "bg-yellow-200 text-yellow-600 "
+                      : "bg-slate-700 text-white"
                   )}
                 >
                   {user.role}

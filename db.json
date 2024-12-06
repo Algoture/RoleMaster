@@ -11,29 +11,36 @@
       "id": "2",
       "name": "Jane Smith",
       "email": "jane@example.com",
-      "role": "Editor",
-      "status": "Inactive"
+      "role": "Hacker",
+      "status": "Active"
     },
     {
       "id": "3",
       "name": "Alice Johnson",
       "email": "alice@example.com",
       "role": "Viewer",
+      "status": "Inactive"
+    },
+    {
+      "id": "fab8",
+      "name": "Donald Trump",
+      "email": "donaldtrump@gmail.com",
+      "role": "Hacker",
       "status": "Active"
     },
     {
-      "id": "4",
-      "name": "Bob Browns",
-      "email": "bob@example.com",
-      "role": "Editor",
-      "status": "Active"
-    },
-    {
-      "id": "1470",
-      "name": "Rahul Gandhi",
-      "email": "rahulgandhi@gmail.com",
+      "id": "c597",
+      "name": "Vijay Setupathi",
+      "email": "vijaysetupathi@gmail.com",
       "role": "Editor",
       "status": "Inactive"
+    },
+    {
+      "id": "0cec",
+      "name": "Ajay Chavan",
+      "email": "ajaychavan@gmail.com",
+      "role": "Viewer",
+      "status": "Active"
     }
   ],
   "roles": [
@@ -59,10 +66,17 @@
     {
       "role": "Viewer",
       "permissions": [
-        "View",
-        "Read"
+        "View"
       ],
       "id": "3"
+    },
+    {
+      "role": "Hacker",
+      "permissions": [
+        "Read",
+        "Write"
+      ],
+      "id": "f02c"
     }
   ],
   "permissions": [

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { DeleteIcon, EditIcon } from "../Components/Icons";
 import { DeleteModal } from "../Components/Modals";
+import { toast } from "react-hot-toast";
 
 const RoleManagement = () => {
   const [roles, setRoles] = useState([]);
@@ -71,6 +72,7 @@ const RoleManagement = () => {
         } else {
           setRoles((prev) => [...prev, updatedRole]);
         }
+        toast.success("Role Updated !");
         resetForm();
       })
       .catch((error) => console.error("Error saving role:", error));
@@ -87,6 +89,7 @@ const RoleManagement = () => {
       setIsDeletingRole(false);
       setRoleToDelete(null);
     }
+    toast.success("Role Deleted !");
   };
   const handleDelete = (roleId) => {
     fetch(`http://localhost:3001/roles/${roleId}`, { method: "DELETE" })
