@@ -1,24 +1,107 @@
 "use client";
-// search, filter, pagination
+
 import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
-import { DeleteModal, EditingModel } from "../Components/Modals";
+import { DeleteModal, EditingModal } from "../Components/Modals";
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "../Components/SearchBar";
-import { usersData } from "../utils/DummyData";
 import clsx from "clsx";
+
 function UserManagement() {
   const [isEditing, setIsEditing] = useState(false);
-  const [editingUser, setEditingUser] = useState("");
+  const [editingUser, setEditingUser] = useState(null);
   const [search, setSearch] = useState("");
   const [isAdding, setIsAdding] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [userToDelete, setUserToDelete] = useState(null);
 
-  const handleDeletion = (user) => {
-    setUserToDelete(user);
-    setIsDeleting(true);
+  useEffect(() => {
+    fetch("http://localhost:3001/users")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setUsers(data);
+        setFilteredUsers(data);
+      })
+      .catch((error) => console.error("Error fetching users:", error));
+  }, []);
+
+  useEffect(() => {
+    const searchTerm = search.trim().toLowerCase();
+    const result = users.filter(
+      (user) =>
+        user.name.toLowerCase().includes(searchTerm) ||
+        user.email.toLowerCase().includes(searchTerm)
+    );
+    setFilteredUsers(result);
+  }, [search, users]);
+
+  const handleAddUser = () => {
+    setIsAdding(true);
+    setIsEditing(true);
+    setEditingUser({
+      name: "",
+      email: "",
+      role: "Viewer",
+      status: "Active",
+    });
   };
+
+  const handleEditUser = (user) => {
+    setIsEditing(true);
+    setEditingUser({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      status: user.status,
+    });
+  };
+
+  const handleSaveUser = (user) => {
+    if (isAdding) {
+      fetch("http://localhost:3001/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      })
+        .then((response) => response.json())
+        .then((newUser) => {
+          setUsers((prevUsers) => [...prevUsers, newUser]);
+        })
+        .catch((error) => console.error("Error adding user:", error));
+      setIsAdding(false);
+    } else {
+      fetch(`http://localhost:3001/users/${user.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      })
+        .then((response) => response.json())
+        .then((updatedUser) => {
+          setUsers((prevUsers) =>
+            prevUsers.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+          );
+        })
+        .catch((error) => console.error("Error updating user:", error));
+    }
+    setIsEditing(false);
+    setEditingUser(null);
+  };
+
+  const handleDeleteUser = (userId) => {
+    fetch(`http://localhost:3001/users/${userId}`, { method: "DELETE" })
+      .then(() => {
+        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+      })
+      .catch((error) => console.error("Error deleting user:", error));
+  };
+
   const handleConfirmDeletion = () => {
     if (userToDelete) {
       handleDeleteUser(userToDelete.id);
@@ -26,135 +109,44 @@ function UserManagement() {
       setIsDeleting(false);
     }
   };
-  const handleEditUser = (user) => {
-    setIsEditing(true);
-    setEditingUser(user);
-  };
-  const handleSaveUser = (user) => {
-    if (isAdding) {
-      setFilteredUsers([
-        ...filteredUsers,
-        { ...user, id: filteredUsers.length + 1 },
-      ]);
-      setIsAdding(false);
-    } else {
-      const updatedUsers = filteredUsers.map((u) =>
-        u.id === user.id ? user : u
-      );
-      setFilteredUsers(updatedUsers);
-    }
-    setIsEditing(false);
-    setEditingUser(null);
-  };
-  const handleDeleteUser = (userId) => {
-    const updatedUsers = filteredUsers.filter((user) => user.id !== userId);
-    setFilteredUsers(updatedUsers);
-  };
-  const handleSearch = (event) => {
-    setSearch(event.target.value.toLowerCase());
-  };
-  const handleToggleStatus = (userId) => {
-    const updatedUsers = filteredUsers.map((user) =>
-      user.id === userId
-        ? { ...user, status: user.status === "Active" ? "Inactive" : "Active" }
-        : user
-    );
-    setFilteredUsers(updatedUsers);
-  };
-  const handleCancel = () => {
-    setIsDeleting(false);
-    setUserToDelete(null);
-  };
-  const handleEditCancel = () => {
-    setIsEditing(false);
-    setIsAdding(false);
-  };
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    const user = {
-      id: editingUser.id,
-      name: e.target.name.value,
-      email: e.target.email.value,
-      role: e.target.role.value,
-      status: "Active",
-    };
-    handleSaveUser(user);
-  };
 
-  useEffect(() => {
-    const searchTerm = search.trim().toLowerCase();
-    let result = usersData;
-    if (searchTerm) {
-      result = result.filter(
-        (user) =>
-          user.name.toLowerCase().includes(searchTerm) ||
-          user.email.toLowerCase().includes(searchTerm)
-      );
+  const handleToggleStatus = (userId) => {
+    const user = users.find((u) => u.id === userId);
+    if (user) {
+      const updatedStatus = user.status === "Active" ? "Inactive" : "Active";
+      handleSaveUser({ ...user, status: updatedStatus });
     }
-    setFilteredUsers(result);
-  }, [search]);
+  };
 
   return (
-    <div className={"p-2 md:ml-44"}>
-      <div className="flex justify-between px-4">
-        <SearchBar handleSearch={handleSearch} search={search} />
+    <div className="p-2 md:ml-44">
+      <div className="flex justify-between px-4 sm:flex-row">
+        <SearchBar
+          handleSearch={(e) => setSearch(e.target.value)}
+          search={search}
+        />
         <button
-          onClick={() => {
-            setIsAdding(true);
-            setIsEditing(true);
-            setEditingUser({
-              name: "",
-              email: "",
-              role: "Viewer",
-              status: "Active",
-            });
-          }}
-          className="mb-4 flex float-right gap-1 items-center bg-accent text-white px-4 py-2 rounded-full"
+          onClick={handleAddUser}
+          className="mb-4 flex float-right gap-1 items-center bg-accent text-white px-2 py-1 rounded-full"
         >
-          <AddIcon height={20} width={20} />
-          Add User
+          <AddIcon height={20} width={20} /> Add User
         </button>
       </div>
+
       <table className="min-w-full shadow-lg rounded-xl table-auto text-left border-collapse">
         <thead>
           <tr>
             <th>Name</th>
             <th className="hidden lg:table-cell">Email</th>
             <th>Role</th>
-            <th className="theader hidden sm:table-cell">Status</th>
+            <th className="hidden sm:table-cell">Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredUsers.map((user) => (
             <tr key={user.id}>
-              <td className="px-4 py-2 border-b">
-                {user.name}
-                <dl className="lg:hidden">
-                  <dd>{user.email}</dd>
-                  <dd className="sm:hidden">
-                    <button
-                      onClick={() => handleToggleStatus(user.id)}
-                      className={clsx(
-                        "px-2  rounded-full gap-1  font-semibold flex items-center text-white",
-                        user.status === "Active"
-                          ? "bg-green-500  "
-                          : "bg-red-500"
-                      )}
-                    >
-                      <div
-                        className={clsx(
-                          "rounded-full size-2",
-                          user.status === "Active"
-                            ? "bg-green-300"
-                            : "bg-red-300"
-                        )}
-                      ></div>
-                      {user.status}
-                    </button>
-                  </dd>
-                </dl>
-              </td>
+              <td className="px-4 py-2 border-b">{user.name}</td>
               <td className="px-4 py-2 border-b hidden lg:table-cell">
                 {user.email}
               </td>
@@ -191,7 +183,7 @@ function UserManagement() {
               </td>
               <td className="border-b">
                 <button
-                  onClick={() => handleDeletion(user)}
+                  onClick={() => setUserToDelete(user) || setIsDeleting(true)}
                   className="text-black py-1 hover:transition-transform"
                 >
                   <DeleteIcon height={25} width={25} />
@@ -210,21 +202,32 @@ function UserManagement() {
 
       {isDeleting && (
         <DeleteModal
-          what={"user"}
+          what="user"
           del={"User"}
-          handleCancel={handleCancel}
+          handleCancel={() => setIsDeleting(false)}
           handleDelete={handleConfirmDeletion}
         />
       )}
 
       {isEditing && (
-        <EditingModel
-          role={editingUser.role}
+        <EditingModal
           isAdding={isAdding}
           name={editingUser.name}
-          handleSubmit={handleEditSubmit}
-          cancel={handleEditCancel}
           email={editingUser.email}
+          role={editingUser.role}
+          status={editingUser.status}
+          handleSubmit={(e) => {
+            e.preventDefault();
+            const user = {
+              id: editingUser.id,
+              name: e.target.name.value,
+              email: e.target.email.value,
+              role: e.target.role.value,
+              status: e.target.status.value,
+            };
+            handleSaveUser(user);
+          }}
+          cancel={() => setIsEditing(false)}
         />
       )}
     </div>

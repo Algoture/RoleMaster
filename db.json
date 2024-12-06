@@ -1,0 +1,86 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "Admin",
+      "status": "Active"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "role": "Editor",
+      "status": "Inactive"
+    },
+    {
+      "id": "3",
+      "name": "Alice Johnson",
+      "email": "alice@example.com",
+      "role": "Viewer",
+      "status": "Active"
+    },
+    {
+      "id": "4",
+      "name": "Bob Browns",
+      "email": "bob@example.com",
+      "role": "Editor",
+      "status": "Active"
+    },
+    {
+      "id": "1470",
+      "name": "Rahul Gandhi",
+      "email": "rahulgandhi@gmail.com",
+      "role": "Editor",
+      "status": "Inactive"
+    }
+  ],
+  "roles": [
+    {
+      "id": "1",
+      "role": "Admin",
+      "permissions": [
+        "Read",
+        "Write",
+        "Delete",
+        "View"
+      ]
+    },
+    {
+      "id": "2",
+      "role": "Editor",
+      "permissions": [
+        "Read",
+        "Write",
+        "View"
+      ]
+    },
+    {
+      "role": "Viewer",
+      "permissions": [
+        "View",
+        "Read"
+      ],
+      "id": "3"
+    }
+  ],
+  "permissions": [
+    {
+      "id": "1",
+      "permission": "Read"
+    },
+    {
+      "id": "2",
+      "permission": "Write"
+    },
+    {
+      "id": "3",
+      "permission": "Delete"
+    },
+    {
+      "id": "4",
+      "permission": "View"
+    }
+  ]
+}

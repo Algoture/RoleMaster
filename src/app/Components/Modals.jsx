@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import { WarningIcon } from "./Icons";
 
 export const DeleteModal = ({ del, what, handleDelete, handleCancel }) => {
@@ -31,14 +33,30 @@ export const DeleteModal = ({ del, what, handleDelete, handleCancel }) => {
   );
 };
 
-export const EditingModel = ({
+export const EditingModal = ({
   isAdding,
   name,
   email,
+  status,
   role,
   handleSubmit,
   cancel,
 }) => {
+  const [roles, setRoles] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3001/roles", {})
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch roles");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setRoles(data);
+      })
+      .catch((error) => console.error("Error fetching roles:", error));
+  }, []);
+
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded shadow-md w-96">
@@ -72,6 +90,20 @@ export const EditingModel = ({
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
+              Status
+            </label>
+            <select
+              name="status"
+              defaultValue={status}
+              className="mt-1 block w-full px-4 py-2 border rounded-md"
+              required
+            >
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
               Role
             </label>
             <select
@@ -80,9 +112,11 @@ export const EditingModel = ({
               className="mt-1 block w-full px-4 py-2 border rounded-md"
               required
             >
-              <option value="Admin">Admin</option>
-              <option value="Editor">Editor</option>
-              <option value="Viewer">Viewer</option>
+              {roles.map((data) => (
+                <option key={data.id} value={data.role}>
+                  {data.role}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex justify-between">

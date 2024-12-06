@@ -1,78 +1,147 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DeleteIcon, EditIcon } from "../Components/Icons";
+import { DeleteModal } from "../Components/Modals";
 
 const RoleManagement = () => {
-  const [roles, setRoles] = useState([
-    {
-      id: 1,
-      roleName: "Admin",
-      permissions: ["Read", "Write", "Delete"],
-    },
-    {
-      id: 2,
-      roleName: "Editor",
-      permissions: ["Read", "Write"],
-    },
-  ]);
-
-  const [permissions] = useState([
-    "Read",
-    "Write",
-    "Delete",
-    "Manage Users",
-    "Manage Roles",
-  ]);
-  const [formData, setFormData] = useState({ roleName: "", permissions: [] });
+  const [roles, setRoles] = useState([]);
+  const [permissions, setPermissions] = useState([]);
   const [editingRole, setEditingRole] = useState(null);
+  const [isDeletingRole, setIsDeletingRole] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState(null);
+  const [formData, setFormData] = useState({ roleName: "", permissions: [] });
+
+  useEffect(() => {
+    fetch("http://localhost:3001/roles")
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to fetch roles");
+        return response.json();
+      })
+      .then((data) => setRoles(data))
+      .catch((error) => console.error("Error fetching roles:", error));
+
+    fetch("http://localhost:3001/permissions")
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to fetch permissions");
+        return response.json();
+      })
+      .then((data) => setPermissions(data))
+      .catch((error) => console.error("Error fetching permissions:", error));
+  }, []);
 
   const handleInputChange = (e) => {
-    const { name, value, checked } = e.target;
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-    if (name === "permissions") {
-      setFormData((prev) => ({
+  const handlePermissionToggle = (permission) => {
+    setFormData((prev) => {
+      const isSelected = prev.permissions.includes(permission);
+      return {
         ...prev,
-        permissions: checked
-          ? [...prev.permissions, value]
-          : prev.permissions.filter((perm) => perm !== value),
-      }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+        permissions: isSelected
+          ? prev.permissions.filter((perm) => perm !== permission)
+          : [...prev.permissions, permission],
+      };
+    });
   };
 
   const handleSubmit = () => {
-    if (editingRole !== null) {
-      setRoles((prev) =>
-        prev.map((role) =>
-          role.id === editingRole ? { ...role, ...formData } : role
-        )
-      );
-    } else {
-      setRoles((prev) => [...prev, { id: prev.length + 1, ...formData }]);
-    }
-    setFormData({ roleName: "", permissions: [] });
-    setEditingRole(null);
+    const method = editingRole ? "PUT" : "POST";
+    const url = editingRole
+      ? `http://localhost:3001/roles/${editingRole.id}`
+      : "http://localhost:3001/roles";
+
+    fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        role: formData.roleName,
+        permissions: formData.permissions,
+      }),
+    })
+      .then((response) => response.json())
+      .then((updatedRole) => {
+        if (editingRole) {
+          setRoles((prev) =>
+            prev.map((role) =>
+              role.id === updatedRole.id ? updatedRole : role
+            )
+          );
+        } else {
+          setRoles((prev) => [...prev, updatedRole]);
+        }
+        resetForm();
+      })
+      .catch((error) => console.error("Error saving role:", error));
   };
 
-  const handleEdit = (roleId) => {
-    const role = roles.find((r) => r.id === roleId);
-    if (role) {
-      setFormData({ roleName: role.roleName, permissions: role.permissions });
-      setEditingRole(roleId);
-    }
+  const handleEdit = (role) => {
+    setEditingRole(role);
+    setFormData({ roleName: role.role, permissions: role.permissions });
   };
 
+  const handleConfirmDeletion = () => {
+    if (roleToDelete) {
+      handleDelete(roleToDelete);
+      setIsDeletingRole(false);
+      setRoleToDelete(null);
+    }
+  };
   const handleDelete = (roleId) => {
-    setRoles((prev) => prev.filter((role) => role.id !== roleId));
+    fetch(`http://localhost:3001/roles/${roleId}`, { method: "DELETE" })
+      .then(() => {
+        setRoles((prev) => prev.filter((role) => role.id !== roleId));
+      })
+      .catch((error) => console.error("Error deleting role:", error));
   };
+
+  const resetForm = () => {
+    setEditingRole(null);
+    setFormData({ roleName: "", permissions: [] });
+  };
+
   return (
-    <div className={"p-6 bg-gray-100 min-h-screen md:ml-44 sm:mt-4"}>
-      <div className="mb-6 bg-white p-4 shadow-md rounded">
+    <div className="p-6 bg-gray-100 min-h-screen md:ml-44 sm:mt-4">
+      <table className="w-full bg-white shadow-md rounded overflow-hidden">
+        <thead>
+          <tr>
+            <th>Role Name</th>
+            <th>Permissions</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {roles.map((role) => (
+            <tr key={role.id} className="border-t">
+              <td className="px-4 py-2">{role.role}</td>
+              <td className="px-4 py-2">{role.permissions.join(", ")}</td>
+              <td className="px-4 py-2">
+                <button
+                  onClick={() => handleEdit(role)}
+                  className="text-black px-3 py-1 rounded mr-2"
+                >
+                  <EditIcon height={25} width={25} />
+                </button>
+                <button
+                  onClick={() =>
+                    setRoleToDelete(role.id) || setIsDeletingRole(true)
+                  }
+                  className="text-black py-1"
+                >
+                  <DeleteIcon height={25} width={25} />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="mt-6 bg-white p-4 shadow-md rounded">
         <h3 className="text-lg font-semibold mb-3">
           {editingRole ? "Edit Role" : "Add Role"}
         </h3>
-        <div className="space-y-4 ">
+        <div className="space-y-4">
           <div>
             <label className="block font-medium mb-1">Role Name</label>
             <input
@@ -89,16 +158,16 @@ const RoleManagement = () => {
             <label className="block font-medium mb-1">Permissions</label>
             <div className="space-y-2">
               {permissions.map((perm) => (
-                <div key={perm} className="flex items-center">
+                <div key={perm.id} className="flex items-center">
                   <input
                     type="checkbox"
-                    name="permissions"
-                    value={perm}
-                    checked={formData.permissions.includes(perm)}
-                    onChange={handleInputChange}
-                    className="mr-2"
+                    id={`perm-${perm.id}`}
+                    checked={formData.permissions.includes(perm.permission)}
+                    onChange={() => handlePermissionToggle(perm.permission)}
                   />
-                  <span>{perm}</span>
+                  <label htmlFor={`perm-${perm.id}`} className="ml-2">
+                    {perm.permission}
+                  </label>
                 </div>
               ))}
             </div>
@@ -110,40 +179,25 @@ const RoleManagement = () => {
           >
             {editingRole ? "Update Role" : "Add Role"}
           </button>
+          {editingRole && (
+            <button
+              onClick={resetForm}
+              className="ml-4 bg-gray-300 px-4 py-2 rounded"
+            >
+              Cancel
+            </button>
+          )}
         </div>
       </div>
 
-      <table className="w-full bg-white shadow-md rounded overflow-hidden">
-        <thead>
-          <tr>
-            <th>Role Name</th>
-            <th>Permissions</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {roles.map((role) => (
-            <tr key={role.id} className="border-t">
-              <td className="px-4 py-2">{role.roleName}</td>
-              <td className="px-4 py-2">{role.permissions.join(", ")}</td>
-              <td className="">
-                <button
-                  onClick={() => handleDelete(role.id)}
-                  className="text-black py-1"
-                >
-                  <DeleteIcon height={25} width={25} />
-                </button>
-                <button
-                  onClick={() => handleEdit(role.id)}
-                  className="text-black px-3 py-1 rounded mr-2"
-                >
-                  <EditIcon height={25} width={25} />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {isDeletingRole && (
+        <DeleteModal
+          what={"role"}
+          del={"Role"}
+          handleDelete={handleConfirmDeletion}
+          handleCancel={() => setIsDeletingRole(false)}
+        />
+      )}
     </div>
   );
 };
