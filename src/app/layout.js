@@ -1,4 +1,5 @@
-import {Sidebar} from "./Components/Sidebar";
+import { Sidebar } from "./Components/Sidebar";
+import { SidebarProvider } from "./context/SidebarContext";
 import "./globals.css";
 
 export const metadata = {
@@ -9,9 +10,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={"antialiased transition-all ml-56"}>
-        <Sidebar />
-        {children}
+      <body className={"antialiased transition-all"}>
+        <SidebarProvider>
+          <Sidebar />
+          {children}
+        </SidebarProvider>
       </body>
     </html>
   );

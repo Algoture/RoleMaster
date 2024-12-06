@@ -71,29 +71,6 @@ export const SettingsIcon = ({ width, height }) => (
     />
   </svg>
 );
-export const LogoutIcon = ({ width, height }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={width}
-    height={height}
-    fill="none"
-  >
-    <path
-      d="M14 3.09502C13.543 3.03241 13.0755 3 12.6 3C7.29807 3 3 7.02944 3 12C3 16.9706 7.29807 21 12.6 21C13.0755 21 13.543 20.9676 14 20.905"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M21 12L11 12M21 12C21 11.2998 19.0057 9.99153 18.5 9.5M21 12C21 12.7002 19.0057 14.0085 18.5 14.5"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 export const DeleteIcon = ({ width, height }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +134,7 @@ export const AddIcon = ({ width, height }) => (
     />
   </svg>
 );
-export const HamburguerIcon = () => (
+export const MenuIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -174,66 +151,6 @@ export const HamburguerIcon = () => (
     />
     <path
       d="M4 15.5L20 15.5"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-export const LeftSideIcon = ({ height, width }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={width}
-    height={height}
-    fill={"none"}
-  >
-    <path
-      d="M4 6L4 18"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M8.00012 12.0005L20.0001 12.0005"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12 8C12 8 8.00001 10.946 8 12C7.99999 13.0541 12 16 12 16"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-export const RightSideIcon = ({ height, width }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={width}
-    height={height}
-    fill={"none"}
-  >
-    <path
-      d="M20.0001 18L20.0001 6"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M16.0001 11.9995L4.00012 11.9995"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12.0002 8C12.0002 8 16.0001 10.946 16.0001 12C16.0001 13.0541 12.0001 16 12.0001 16"
       stroke="currentColor"
       strokeWidth="1.5"
       strokeLinecap="round"
@@ -287,5 +204,16 @@ export const WarningIcon = ({ height, width }) => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+  </svg>
+);
+export const SearchIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 48 48"
+    width="22px"
+    height="22px"
+    fill="#71717a"
+  >
+    <path d="M 20.5 6 C 12.509634 6 6 12.50964 6 20.5 C 6 28.49036 12.509634 35 20.5 35 C 23.956359 35 27.133709 33.779044 29.628906 31.75 L 39.439453 41.560547 A 1.50015 1.50015 0 1 0 41.560547 39.439453 L 31.75 29.628906 C 33.779044 27.133709 35 23.956357 35 20.5 C 35 12.50964 28.490366 6 20.5 6 z M 20.5 9 C 26.869047 9 32 14.130957 32 20.5 C 32 23.602612 30.776198 26.405717 28.791016 28.470703 A 1.50015 1.50015 0 0 0 28.470703 28.791016 C 26.405717 30.776199 23.602614 32 20.5 32 C 14.130953 32 9 26.869043 9 20.5 C 9 14.130957 14.130953 9 20.5 9 z" />
   </svg>
 );

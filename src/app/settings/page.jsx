@@ -66,16 +66,13 @@ const RoleManagement = () => {
   const handleDelete = (roleId) => {
     setRoles((prev) => prev.filter((role) => role.id !== roleId));
   };
-
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-xl font-bold mb-4">Role Management</h2>
-
+    <div className={"p-6 bg-gray-100 min-h-screen md:ml-44 sm:mt-4"}>
       <div className="mb-6 bg-white p-4 shadow-md rounded">
         <h3 className="text-lg font-semibold mb-3">
           {editingRole ? "Edit Role" : "Add Role"}
         </h3>
-        <div className="space-y-4">
+        <div className="space-y-4 ">
           <div>
             <label className="block font-medium mb-1">Role Name</label>
             <input
@@ -109,7 +106,7 @@ const RoleManagement = () => {
 
           <button
             onClick={handleSubmit}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="bg-accent text-white px-4 py-2 rounded hover:bg-secondary"
           >
             {editingRole ? "Update Role" : "Add Role"}
           </button>
@@ -117,11 +114,11 @@ const RoleManagement = () => {
       </div>
 
       <table className="w-full bg-white shadow-md rounded overflow-hidden">
-        <thead className="bg-gray-200">
+        <thead>
           <tr>
-            <th className="text-left px-4 py-2">Role Name</th>
-            <th className="text-left px-4 py-2">Permissions</th>
-            <th className="text-left px-4 py-2">Actions</th>
+            <th>Role Name</th>
+            <th>Permissions</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -129,7 +126,7 @@ const RoleManagement = () => {
             <tr key={role.id} className="border-t">
               <td className="px-4 py-2">{role.roleName}</td>
               <td className="px-4 py-2">{role.permissions.join(", ")}</td>
-              <td className="px-4 py-2 space-x-2">
+              <td className="">
                 <button
                   onClick={() => handleDelete(role.id)}
                   className="text-black py-1"

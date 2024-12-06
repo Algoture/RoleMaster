@@ -1,88 +1,57 @@
 "use client";
+
 import Link from "next/link";
+import { useSidebar } from "../context/SidebarContext";
+import clsx from "clsx";
 import {
   DashboardIcon,
-  LeftSideIcon,
-  LogoutIcon,
-  RightSideIcon,
   SettingsIcon,
   UserIcon,
-  HamburguerIcon,
+  MenuIcon,
   CloseIcon,
 } from "./Icons";
 import { usePathname } from "next/navigation";
-import clsx from "clsx";
-import { useContext, createContext, useState } from "react";
 
-export const SideBarContext = createContext();
 export const Sidebar = () => {
-  const [expanded, setExpanded] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { mobileMenuOpen, setMobileMenuOpen } = useSidebar();
 
   return (
     <>
       <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-primary text-white  rounded-full"
+        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-primary text-white rounded-full"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
       >
         {mobileMenuOpen ? (
           <CloseIcon height={24} width={24} />
         ) : (
-          <HamburguerIcon height={24} width={24} />
+          <MenuIcon height={24} width={24} />
         )}
       </button>
 
       <div
         className={clsx(
-          "fixed left-0 top-0 h-screen bg-white shadow-lg p-4 flex flex-col gap-2 transition-transform",
-          mobileMenuOpen ? "translate-x-0 z-40" : "-translate-x-full z-[-1]",
-          expanded ? "w-64" : "w-16",
-          "md:translate-x-0 md:z-auto md:w-auto"
+          "fixed left-0 top-0 h-screen bg-white md:translate-x-0 md:z-auto md:w-auto shadow-lg p-4 flex flex-col gap-2 transition-transform",
+          mobileMenuOpen ? "translate-x-0 z-40" : "-translate-x-full z-[-1]"
         )}
       >
         <div className="flex justify-between items-center w-full gap-5 mb-4 overflow-hidden">
-          <h1
-            className={clsx(
-              "font-bold text-2xl text-center text-nowrap",
-              expanded ? "" : "sr-only"
-            )}
-          >
-            Admin Panel
-          </h1>
-
-          <button
-            className={clsx(expanded ? "" : "ml-1.5")}
-            onClick={() => setExpanded((current) => !current)}
-          >
-            {expanded ? (
-              <LeftSideIcon height={30} width={30} />
-            ) : (
-              <RightSideIcon height={30} width={30} />
-            )}
-          </button>
+          <h1 className={"font-bold text-2xl text-center"}>Admin Panel</h1>
         </div>
-        <SideBarContext.Provider value={{ expanded }}>
-          <SidebarItem
-            href={""}
-            label={"Dashboard"}
-            icon={<DashboardIcon height={25} width={25} />}
-          />
-          <SidebarItem
-            href={"users"}
-            label={"Users"}
-            icon={<UserIcon height={25} width={25} />}
-          />
-          <SidebarItem
-            href={"settings"}
-            label={"Settings"}
-            icon={<SettingsIcon height={25} width={25} />}
-          />
-          <SidebarItem
-            href={"logout"}
-            label={"Logout"}
-            icon={<LogoutIcon height={25} width={25} />}
-          />
-        </SideBarContext.Provider>
+        <SidebarItem
+          href={""}
+          label={"Dashboard"}
+          icon={<DashboardIcon height={25} width={25} />}
+        />
+        <SidebarItem
+          href={"users"}
+          label={"Users"}
+          icon={<UserIcon height={25} width={25} />}
+        />
+        <SidebarItem
+          href={"settings"}
+          label={"Settings"}
+          icon={<SettingsIcon height={25} width={25} />}
+        />
       </div>
 
       {mobileMenuOpen && (
@@ -96,8 +65,8 @@ export const Sidebar = () => {
 };
 
 const SidebarItem = ({ href, label, icon }) => {
-  const { expanded } = useContext(SideBarContext);
   const path = usePathname();
+
   return (
     <Link
       href={`/${href}`}
@@ -107,7 +76,7 @@ const SidebarItem = ({ href, label, icon }) => {
       )}
     >
       {icon}
-      {expanded && <span>{label}</span>}
+      {label}
     </Link>
   );
 };

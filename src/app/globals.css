@@ -19,3 +19,7 @@ body {
   background: var(--background);
   font-family: "Inter";
 }
+
+th{
+  @apply text-left px-4 py-2 border-b
+}
