@@ -4,15 +4,15 @@ import { SearchIcon } from "./Icons";
 
 export const SearchBar = ({ handleSearch, search = "" }) => {
   return (
-    <div className="flex items-center h-fit bg-gray-200 rounded-full gap-2 px-4 py-2">
+    <div className="items-center md:ml-0 ml-16 flex h-10 overflow-hidden w-full     bg-gray-200 rounded-lg gap-2 py-2 px-4">
       <SearchIcon />
       <input
         type="text"
         suppressHydrationWarning
-        placeholder="Search.."
+        placeholder="Search by name or email.."
         onChange={handleSearch}
         defaultValue={search || ""}
-        className="focus:outline-none bg-gray-200 placeholder-black"
+        className="w-full outline-none bg-transparent placeholder-slate-500 text-gray-600"
       />
     </div>
   );

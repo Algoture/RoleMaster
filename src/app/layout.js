@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body className={"antialiased transition-all"}>
         <SidebarProvider>
           <Sidebar />
-          <Toaster position="bottom-right"/>
+          <Toaster position="bottom-left"/>
           {children}
         </SidebarProvider>
       </body>

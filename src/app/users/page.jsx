@@ -29,7 +29,11 @@ function UserManagement() {
         setUsers(data);
         setFilteredUsers(data);
       })
-      .catch((error) => console.error("Error fetching users:", error));
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        toast.error(`Failed to fetch users`);
+        toast.error(`Maybe Server is offline`);
+      });
   }, []);
 
   useEffect(() => {
@@ -48,7 +52,7 @@ function UserManagement() {
     setEditingUser({
       name: "",
       email: "",
-      role: "Viewer",
+      role: "",
       status: "Active",
     });
   };
@@ -73,9 +77,13 @@ function UserManagement() {
       })
         .then((response) => response.json())
         .then((newUser) => {
+          toast.success(`User ${newUser.name} Added!`);
           setUsers((prevUsers) => [...prevUsers, newUser]);
         })
-        .catch((error) => console.error("Error adding user:", error));
+        .catch((error) => {
+          console.error("Error adding user:", error);
+          toast.error(`Failed to add user`);
+        });
       setIsAdding(false);
     } else {
       fetch(`http://localhost:3001/users/${user.id}`, {
@@ -85,11 +93,15 @@ function UserManagement() {
       })
         .then((response) => response.json())
         .then((updatedUser) => {
+          toast.success(`User ${updatedUser.name} updated!`);
           setUsers((prevUsers) =>
             prevUsers.map((u) => (u.id === updatedUser.id ? updatedUser : u))
           );
         })
-        .catch((error) => console.error("Error updating user:", error));
+        .catch((error) => {
+          console.error("Error updating user:", error);
+          toast.error(`Failed to update user`);
+        });
     }
     setIsEditing(false);
     setEditingUser(null);
@@ -100,7 +112,10 @@ function UserManagement() {
       .then(() => {
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
       })
-      .catch((error) => console.error("Error deleting user:", error));
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+        toast.error(`Failed to delete user`);
+      });
   };
 
   const handleConfirmDeletion = () => {
@@ -108,7 +123,7 @@ function UserManagement() {
       handleDeleteUser(userToDelete.id);
       setUserToDelete(null);
       setIsDeleting(false);
-      toast.success("User Deleted !");
+      toast.success(`User ${userToDelete.name} Deleted`);
     }
   };
 
@@ -121,37 +136,37 @@ function UserManagement() {
   };
 
   return (
-    <div className="p-2 md:ml-44">
-      <div className="m-4 flex flex-col sm:flex-row sm:flex-wrap  justify-between gap-4 items-center">
+    <div className="p-2 md:ml-44 ">
+      <div className="md:p-2 flex my-2 items-center gap-2 justify-between">
         <SearchBar
           handleSearch={(e) => setSearch(e.target.value)}
           search={search}
-          className="flex-1 w-full sm:w-auto"
         />
         <button
           onClick={handleAddUser}
-          className="flex items-center justify-center gap-2 bg-accent text-white px-4 py-2 rounded-full sm:w-auto"
+          className="flex items-center text-nowrap justify-center gap-2 bg-accent text-white px-4 py-2 rounded-lg 
+              sm:ml-auto sm:mr-0 mx-auto sm:static"
         >
           <AddIcon height={20} width={20} /> Add User
         </button>
       </div>
 
-      <table className="min-w-full shadow-lg rounded-xl table-auto text-left border-collapse">
-        <thead>
+      <table className="min-w-full bg-clip-border shadow-lg rounded-lg mt-2 table-auto text-left border-collapse">
+        <thead >
           <tr>
-            <th>Name</th>
+            <th className="rounded-tl-lg ">Name</th>
             <th className="hidden lg:table-cell">Email</th>
             <th>Role</th>
             <th className="theader hidden sm:table-cell">Status</th>
-            <th>Actions</th>
+            <th className="rounded-tr-lg">Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredUsers.map((user) => (
             <tr key={user.id}>
-              <td className="px-4 py-2 border-b">
+              <td className="px-4 py-3 border-b">
                 <div className="flex items-center gap-2">
-                  {user.name}
+                  <p className="w-28 text-nowrap">{user.name}</p>
                   <dd className="sm:hidden">
                     <button
                       onClick={() => handleToggleStatus(user.id)}
@@ -161,23 +176,14 @@ function UserManagement() {
                           ? "bg-green-500  "
                           : "bg-red-500"
                       )}
-                    >
-                      <div
-                        className={clsx(
-                          "rounded-full size-2",
-                          user.status === "Active"
-                            ? "bg-green-300"
-                            : "bg-red-300"
-                        )}
-                      ></div>
-                    </button>
+                    ></button>
                   </dd>
                 </div>
                 <dl className="lg:hidden">
                   <dd>{user.email}</dd>
                 </dl>
               </td>
-              <td className="px-4 py-2 border-b hidden lg:table-cell">
+              <td className="px-4 py-3 border-b hidden lg:table-cell">
                 {user.email}
               </td>
               <td className="px-4 py-2 border-b">
@@ -190,17 +196,17 @@ function UserManagement() {
                       ? "bg-blue-100 text-blue-700"
                       : user.role === "Viewer"
                       ? "bg-yellow-200 text-yellow-600 "
-                      : "bg-slate-700 text-white"
+                      : "bg-slate-700 text-slate-200"
                   )}
                 >
                   {user.role}
                 </span>
               </td>
-              <td className="px-4 py-2 border-b hidden sm:table-cell">
+              <td className="px-2 py-1 border-b hidden sm:table-cell">
                 <button
                   onClick={() => handleToggleStatus(user.id)}
                   className={clsx(
-                    "px-3 py-1 rounded-full gap-2 text-sm font-semibold flex items-center text-white",
+                    "px-2 py-1 rounded-full gap-2 text-sm font-semibold flex items-center text-white",
                     user.status === "Active" ? "bg-green-500  " : "bg-red-500"
                   )}
                 >
@@ -213,17 +219,13 @@ function UserManagement() {
                   {user.status}
                 </button>
               </td>
-              <td className="border-b">
+              <td className="border-b flex gap-2 py-3">
                 <button
                   onClick={() => setUserToDelete(user) || setIsDeleting(true)}
-                  className="text-black py-1 hover:transition-transform"
                 >
                   <DeleteIcon height={25} width={25} />
                 </button>
-                <button
-                  onClick={() => handleEditUser(user)}
-                  className="text-black px-3 py-1 rounded mr-2"
-                >
+                <button onClick={() => handleEditUser(user)}>
                   <EditIcon height={25} width={25} />
                 </button>
               </td>

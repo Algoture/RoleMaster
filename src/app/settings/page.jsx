@@ -1,18 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { DeleteIcon, EditIcon } from "../Components/Icons";
-import { DeleteModal } from "../Components/Modals";
+import { DeleteModal, RoleModal, PermissionModal } from "../Components/Modals";
 import { toast } from "react-hot-toast";
+import clsx from "clsx";
 
 const RoleManagement = () => {
   const [roles, setRoles] = useState([]);
   const [permissions, setPermissions] = useState([]);
+  const [permission, setPermission] = useState("");
   const [editingRole, setEditingRole] = useState(null);
+  const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
+  const [isPermissionModalOpen, setIsPermissionModalOpen] = useState(false);
   const [isDeletingRole, setIsDeletingRole] = useState(false);
   const [roleToDelete, setRoleToDelete] = useState(null);
   const [formData, setFormData] = useState({ roleName: "", permissions: [] });
 
+  // Fetch roles and permissions on component load
   useEffect(() => {
+    fetchRoles();
+    fetchPermissions();
+  }, []);
+
+  const fetchRoles = () => {
     fetch("http://localhost:3001/roles")
       .then((response) => {
         if (!response.ok) throw new Error("Failed to fetch roles");
@@ -20,7 +30,9 @@ const RoleManagement = () => {
       })
       .then((data) => setRoles(data))
       .catch((error) => console.error("Error fetching roles:", error));
+  };
 
+  const fetchPermissions = () => {
     fetch("http://localhost:3001/permissions")
       .then((response) => {
         if (!response.ok) throw new Error("Failed to fetch permissions");
@@ -28,7 +40,7 @@ const RoleManagement = () => {
       })
       .then((data) => setPermissions(data))
       .catch((error) => console.error("Error fetching permissions:", error));
-  }, []);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +59,7 @@ const RoleManagement = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmitRole = () => {
     const method = editingRole ? "PUT" : "POST";
     const url = editingRole
       ? `http://localhost:3001/roles/${editingRole.id}`
@@ -72,41 +84,70 @@ const RoleManagement = () => {
         } else {
           setRoles((prev) => [...prev, updatedRole]);
         }
-        toast.success("Role Updated !");
+        toast.success(editingRole ? "Role Updated!" : "Role Added!");
         resetForm();
+        setIsRoleModalOpen(false);
       })
       .catch((error) => console.error("Error saving role:", error));
   };
 
-  const handleEdit = (role) => {
+  const handleEditRole = (role) => {
     setEditingRole(role);
     setFormData({ roleName: role.role, permissions: role.permissions });
+    setIsRoleModalOpen(true);
   };
 
   const handleConfirmDeletion = () => {
     if (roleToDelete) {
-      handleDelete(roleToDelete);
-      setIsDeletingRole(false);
-      setRoleToDelete(null);
+      fetch(`http://localhost:3001/roles/${roleToDelete}`, { method: "DELETE" })
+        .then(() => {
+          setRoles((prev) => prev.filter((role) => role.id !== roleToDelete));
+          setIsDeletingRole(false);
+          setRoleToDelete(null);
+          toast.success("Role Deleted!");
+        })
+        .catch((error) => console.error("Error deleting role:", error));
     }
-    toast.success("Role Deleted !");
   };
-  const handleDelete = (roleId) => {
-    fetch(`http://localhost:3001/roles/${roleId}`, { method: "DELETE" })
-      .then(() => {
-        setRoles((prev) => prev.filter((role) => role.id !== roleId));
+
+  const handleAddPermission = (newPermission) => {
+    fetch("http://localhost:3001/permissions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ permission: newPermission }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setPermissions((prev) => [...prev, data]);
+        toast.success("Permission Added!");
+        setIsPermissionModalOpen(false);
       })
-      .catch((error) => console.error("Error deleting role:", error));
+      .catch((error) => console.error("Error adding permission:", error));
   };
 
   const resetForm = () => {
     setEditingRole(null);
     setFormData({ roleName: "", permissions: [] });
   };
-
   return (
-    <div className="p-6 bg-gray-100 min-h-screen md:ml-44 sm:mt-4">
-      <table className="w-full bg-white shadow-md rounded overflow-hidden">
+    <div className="p-6 bg-gray-100 min-h-screen md:ml-44">
+      <div className="mb-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold">Role and Permission Management</h1>
+        <button
+          onClick={() => setIsRoleModalOpen(true)}
+          className="bg-accent text-white px-4 py-2 rounded-lg"
+        >
+          Add Role
+        </button>
+        <button
+          onClick={() => setIsPermissionModalOpen(true)}
+          className="ml-2 bg-accent text-white px-4 py-2 rounded-lg"
+        >
+          Add Permission
+        </button>
+      </div>
+
+      <table className="w-full bg-white shadow-md rounded-xl overflow-hidden">
         <thead>
           <tr>
             <th>Role Name</th>
@@ -117,11 +158,26 @@ const RoleManagement = () => {
         <tbody>
           {roles.map((role) => (
             <tr key={role.id} className="border-t">
-              <td className="px-4 py-2">{role.role}</td>
-              <td className="px-4 py-2">{role.permissions.join(", ")}</td>
-              <td className="px-4 py-2">
+              <td>
+                <span
+                  className={clsx(
+                    "px-2 py-1 border-b rounded-full text-sm font-semibold ",
+                    role.role === "Admin"
+                      ? "bg-violet-200 text-violet-700"
+                      : role.role === "Editor"
+                      ? "bg-blue-100 text-blue-700"
+                      : role.role === "Viewer"
+                      ? "bg-yellow-200 text-yellow-600 "
+                      : "bg-slate-700 text-slate-200"
+                  )}
+                >
+                  {role.role}
+                </span>
+              </td>
+              <td>{role.permissions.join(", ")}</td>
+              <td>
                 <button
-                  onClick={() => handleEdit(role)}
+                  onClick={() => handleEditRole(role)}
                   className="text-black px-3 py-1 rounded mr-2"
                 >
                   <EditIcon height={25} width={25} />
@@ -140,58 +196,31 @@ const RoleManagement = () => {
         </tbody>
       </table>
 
-      <div className="mt-6 bg-white p-4 shadow-md rounded">
-        <h3 className="text-lg font-semibold mb-3">
-          {editingRole ? "Edit Role" : "Add Role"}
-        </h3>
-        <div className="space-y-4">
-          <div>
-            <label className="block font-medium mb-1">Role Name</label>
-            <input
-              type="text"
-              name="roleName"
-              value={formData.roleName}
-              onChange={handleInputChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Enter role name"
-            />
-          </div>
+      {isRoleModalOpen && (
+        <RoleModal
+          editingRole={editingRole}
+          formData={formData}
+          handleInputChange={handleInputChange}
+          permissions={permissions}
+          handleSubmit={handleSubmitRole}
+          handlePermissionToggle={handlePermissionToggle}
+          resetForm={() => {
+            setIsRoleModalOpen(false);
+            resetForm();
+          }}
+        />
+      )}
 
-          <div>
-            <label className="block font-medium mb-1">Permissions</label>
-            <div className="space-y-2">
-              {permissions.map((perm) => (
-                <div key={perm.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`perm-${perm.id}`}
-                    checked={formData.permissions.includes(perm.permission)}
-                    onChange={() => handlePermissionToggle(perm.permission)}
-                  />
-                  <label htmlFor={`perm-${perm.id}`} className="ml-2">
-                    {perm.permission}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <button
-            onClick={handleSubmit}
-            className="bg-accent text-white px-4 py-2 rounded hover:bg-secondary"
-          >
-            {editingRole ? "Update Role" : "Add Role"}
-          </button>
-          {editingRole && (
-            <button
-              onClick={resetForm}
-              className="ml-4 bg-gray-300 px-4 py-2 rounded"
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-      </div>
+      {isPermissionModalOpen && (
+        <PermissionModal
+          permission={permission}
+          cancel={() => setIsPermissionModalOpen(false)}
+          handleSubmit={(e) => {
+            e.preventDefault();
+            handleAddPermission(e.target.name.value);
+          }}
+        />
+      )}
 
       {isDeletingRole && (
         <DeleteModal

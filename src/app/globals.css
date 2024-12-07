@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #F8F8FF;
+  --background: #f8f8ff;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #f8f8ff;
     --foreground: #ededed;
   }
 }
@@ -20,6 +20,27 @@ body {
   font-family: "Inter";
 }
 
-th{
-  @apply text-left px-4 py-2 border-b
+th {
+  @apply text-left px-4 py-2 border-b;
+}
+
+td {
+  @apply px-4 py-2;
+}
+
+input[type="email"],
+input[type="text"] {
+  @apply mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none;
+}
+
+.btns{
+  @apply flex justify-between w-full gap-2;
+}
+
+.btn{
+  @apply text-white w-full px-4 py-2 rounded-lg;
+}
+
+.modal{
+  @apply fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50;
 }

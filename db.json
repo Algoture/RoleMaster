@@ -5,7 +5,7 @@
       "name": "John Doe",
       "email": "john@example.com",
       "role": "Admin",
-      "status": "Active"
+      "status": "Inactive"
     },
     {
       "id": "2",
@@ -36,11 +36,25 @@
       "status": "Inactive"
     },
     {
-      "id": "0cec",
-      "name": "Ajay Chavan",
-      "email": "ajaychavan@gmail.com",
+      "id": "c993",
+      "name": "Robert\tLewis",
+      "email": "RobertLewis@hotmail.com",
+      "role": "Editor",
+      "status": "Inactive"
+    },
+    {
+      "id": "6b26",
+      "name": "Anthony Lopez",
+      "email": "AnthonyLopez@gmail.com",
       "role": "Viewer",
       "status": "Active"
+    },
+    {
+      "id": "b0b6",
+      "name": "Jane Watson",
+      "email": "janewatson@gmail.com",
+      "role": "Editor",
+      "status": "Inactive"
     }
   ],
   "roles": [

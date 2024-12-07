@@ -34,7 +34,7 @@ export const Sidebar = () => {
           mobileMenuOpen ? "translate-x-0 z-40" : "-translate-x-full z-[-1]"
         )}
       >
-        <div className="flex justify-between items-center w-full gap-5 mb-4 overflow-hidden">
+        <div className="flex justify-between items-center md:mt-0 mt-12 w-full gap-5 md:mb-4 overflow-hidden">
           <h1 className={"font-bold text-2xl text-center"}>Admin Panel</h1>
         </div>
         <SidebarItem
@@ -72,7 +72,7 @@ const SidebarItem = ({ href, label, icon }) => {
       href={`/${href}`}
       className={clsx(
         path === `/${href}` ? "bg-accent text-white" : "",
-        "flex items-center gap-2 p-2 transition-all rounded-xl"
+        "flex items-center gap-2 p-2 transition-all rounded-lg"
       )}
     >
       {icon}
