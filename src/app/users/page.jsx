@@ -1,6 +1,6 @@
 "use client";
 
-import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
+import { AddIcon, DeleteIcon, EditIcon, SortIcon } from "../Components/Icons";
 import { DeleteModal, EditingModal } from "../Components/Modals";
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "../Components/SearchBar";
@@ -15,7 +15,9 @@ function UserManagement() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [sortDirection, setSortDirection] = useState("asc");
   const [userToDelete, setUserToDelete] = useState(null);
+  const statusOrder = { Active: 1, Inactive: 2 };
 
   useEffect(() => {
     fetch("http://localhost:3001/users")
@@ -46,6 +48,17 @@ function UserManagement() {
     setFilteredUsers(result);
   }, [search, users]);
 
+  const sortUsersByStatus = () => {
+    const sortedUsers = [...filteredUsers].sort((a, b) => {
+      if (sortDirection === "asc") {
+        return (statusOrder[a.status] || 0) - (statusOrder[b.status] || 0);
+      } else {
+        return (statusOrder[b.status] || 0) - (statusOrder[a.status] || 0);
+      }
+    });
+    setFilteredUsers(sortedUsers);
+    setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+  };
   const handleAddUser = () => {
     setIsAdding(true);
     setIsEditing(true);
@@ -152,12 +165,19 @@ function UserManagement() {
       </div>
 
       <table className="min-w-full bg-clip-border shadow-lg rounded-lg mt-2 table-auto text-left border-collapse">
-        <thead >
+        <thead>
           <tr>
             <th className="rounded-tl-lg ">Name</th>
             <th className="hidden lg:table-cell">Email</th>
             <th>Role</th>
-            <th className="theader hidden sm:table-cell">Status</th>
+            <th className="theader hidden sm:table-cell ">
+              <div className="flex items-center gap-1">
+                Status
+                <button onClick={sortUsersByStatus}>
+                  <SortIcon height={20} width={20} asc={sortDirection} />
+                </button>
+              </div>
+            </th>
             <th className="rounded-tr-lg">Actions</th>
           </tr>
         </thead>

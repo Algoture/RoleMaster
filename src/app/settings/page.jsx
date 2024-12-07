@@ -131,8 +131,7 @@ const RoleManagement = () => {
   };
   return (
     <div className="p-6 bg-gray-100 min-h-screen md:ml-44">
-      <div className="mb-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Role and Permission Management</h1>
+      <div className="mb-4 flex justify-end items-center">
         <button
           onClick={() => setIsRoleModalOpen(true)}
           className="bg-accent text-white px-4 py-2 rounded-lg"
@@ -146,7 +145,7 @@ const RoleManagement = () => {
           Add Permission
         </button>
       </div>
-
+      
       <table className="w-full bg-white shadow-md rounded-xl overflow-hidden">
         <thead>
           <tr>
@@ -175,18 +174,14 @@ const RoleManagement = () => {
                 </span>
               </td>
               <td>{role.permissions.join(", ")}</td>
-              <td>
-                <button
-                  onClick={() => handleEditRole(role)}
-                  className="text-black px-3 py-1 rounded mr-2"
-                >
+              <td className="flex gap-2 py-3">
+                <button onClick={() => handleEditRole(role)}>
                   <EditIcon height={25} width={25} />
                 </button>
                 <button
                   onClick={() =>
                     setRoleToDelete(role.id) || setIsDeletingRole(true)
                   }
-                  className="text-black py-1"
                 >
                   <DeleteIcon height={25} width={25} />
                 </button>

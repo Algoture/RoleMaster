@@ -33,7 +33,7 @@
       "name": "Vijay Setupathi",
       "email": "vijaysetupathi@gmail.com",
       "role": "Editor",
-      "status": "Inactive"
+      "status": "Active"
     },
     {
       "id": "c993",
@@ -86,10 +86,7 @@
     },
     {
       "role": "Hacker",
-      "permissions": [
-        "Read",
-        "Write"
-      ],
+      "permissions": [],
       "id": "f02c"
     }
   ],
