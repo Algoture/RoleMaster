@@ -60,8 +60,6 @@ const RoleManagement = () => {
     });
   };
 
-  const handlePermDelete = () => {};
-
   const handleSubmitRole = () => {
     const method = editingRole ? "PUT" : "POST";
     const url = editingRole
@@ -153,20 +151,22 @@ const RoleManagement = () => {
       <div className="mb-4 flex justify-end items-center">
         <button
           onClick={() => setIsRoleModalOpen(true)}
-          className="bg-accent text-white px-4 py-2 rounded-lg"
+          className="bg-accent flex items-center text-white p-2 rounded-lg"
         >
+          <AddIcon height={20} width={20} />
           Add Role
         </button>
         <button
           onClick={() => setIsPermissionModalOpen(true)}
-          className="ml-2 bg-accent text-white px-4 py-2 rounded-lg"
+          className="ml-2 flex items-center bg-accent text-white p-2 rounded-lg"
         >
+          <AddIcon height={20} width={20} />
           Add Permission
         </button>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <table className="w-fit h-fit bg-white shadow-md rounded-xl overflow-hidden">
+        <table className="w-full sm:w-fit h-fit bg-white shadow-md rounded-xl overflow-hidden">
           <thead>
             <tr>
               <th>Roles</th>
@@ -195,9 +195,6 @@ const RoleManagement = () => {
                 </td>
                 <td>{role.permissions.join(", ")}</td>
                 <td className="flex gap-2 py-3">
-                  <button onClick={() => handleEditRole(role)}>
-                    <EditIcon height={25} width={25} />
-                  </button>
                   <button
                     onClick={() => {
                       setRoleToDelete(role.id);
@@ -206,12 +203,15 @@ const RoleManagement = () => {
                   >
                     <DeleteIcon height={25} width={25} />
                   </button>
+                  <button onClick={() => handleEditRole(role)}>
+                    <EditIcon height={25} width={25} />
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <table className="w-fit h-fit p-4 bg-white shadow-md rounded-xl overflow-hidden">
+        <table className="w-full sm:w-fit h-fit p-4 bg-white shadow-md rounded-xl overflow-hidden">
           <thead>
             <tr>
               <th>Permissions</th>
@@ -223,9 +223,6 @@ const RoleManagement = () => {
               <tr key={perm.id} className="border-t">
                 <td>{perm.permission}</td>
                 <td className="flex gap-2">
-                  <button>
-                    <EditIcon height={25} width={25} />
-                  </button>
                   <button
                     onClick={() => {
                       setPermissionToDel(perm.id);
@@ -233,6 +230,9 @@ const RoleManagement = () => {
                     }}
                   >
                     <DeleteIcon height={25} width={25} />
+                  </button>
+                  <button>
+                    <EditIcon height={25} width={25} />
                   </button>
                 </td>
               </tr>

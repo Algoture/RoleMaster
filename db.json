@@ -11,7 +11,7 @@
       "id": "2",
       "name": "Jane Smith",
       "email": "jane@example.com",
-      "role": "Hacker",
+      "role": "Editor",
       "status": "Active"
     },
     {
@@ -48,13 +48,6 @@
       "email": "AnthonyLopez@gmail.com",
       "role": "Viewer",
       "status": "Active"
-    },
-    {
-      "id": "b0b6",
-      "name": "Jane Watson",
-      "email": "janewatson@gmail.com",
-      "role": "Editor",
-      "status": "Inactive"
     }
   ],
   "roles": [
@@ -90,6 +83,18 @@
       "permissions": [
         "Read"
       ]
+    },
+    {
+      "id": "f51f",
+      "role": "Owner",
+      "permissions": [
+        "Read",
+        "Write",
+        "Delete",
+        "View",
+        "Modify",
+        "Post"
+      ]
     }
   ],
   "permissions": [
@@ -112,6 +117,10 @@
     {
       "id": "6df1",
       "permission": "Modify"
+    },
+    {
+      "id": "ae36",
+      "permission": "Post"
     }
   ]
 }
