@@ -209,7 +209,7 @@ export const RoleModal = ({
             </button>
             <button
               onClick={handleSubmit}
-              className="bg-accent btn text-nowrap hover:bg-secondary"
+              className="bg-accent btn text-nowrap"
             >
               {editingRole ? "Update Role" : "Add Role"}
             </button>

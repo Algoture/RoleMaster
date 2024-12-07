@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { DeleteIcon, EditIcon } from "../Components/Icons";
+import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
 import { DeleteModal, RoleModal, PermissionModal } from "../Components/Modals";
 import { toast } from "react-hot-toast";
 import clsx from "clsx";
@@ -9,14 +9,15 @@ const RoleManagement = () => {
   const [roles, setRoles] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const [permission, setPermission] = useState("");
+  const [permissionToDel, setPermissionToDel] = useState(null);
   const [editingRole, setEditingRole] = useState(null);
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
+  const [isDeleltingPerm, setIsDeletingPerm] = useState(false);
   const [isPermissionModalOpen, setIsPermissionModalOpen] = useState(false);
   const [isDeletingRole, setIsDeletingRole] = useState(false);
   const [roleToDelete, setRoleToDelete] = useState(null);
   const [formData, setFormData] = useState({ roleName: "", permissions: [] });
 
-  // Fetch roles and permissions on component load
   useEffect(() => {
     fetchRoles();
     fetchPermissions();
@@ -58,6 +59,8 @@ const RoleManagement = () => {
       };
     });
   };
+
+  const handlePermDelete = () => {};
 
   const handleSubmitRole = () => {
     const method = editingRole ? "PUT" : "POST";
@@ -107,6 +110,22 @@ const RoleManagement = () => {
           toast.success("Role Deleted!");
         })
         .catch((error) => console.error("Error deleting role:", error));
+    } else {
+      fetch(`http://localhost:3001/permissions/${permissionToDel}`, {
+        method: "DELETE",
+      })
+        .then(() => {
+          setPermissions((prev) =>
+            prev.filter((perm) => perm.id !== permissionToDel)
+          );
+          setPermissionToDel(null);
+          setIsDeletingPerm(false);
+          toast.success("Permission Deleted!");
+        })
+        .catch((er) => {
+          console.error("Error deleting permission:", er);
+          toast.error("Couldn't Delete Permission");
+        });
     }
   };
 
@@ -145,52 +164,82 @@ const RoleManagement = () => {
           Add Permission
         </button>
       </div>
-      
-      <table className="w-full bg-white shadow-md rounded-xl overflow-hidden">
-        <thead>
-          <tr>
-            <th>Role Name</th>
-            <th>Permissions</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {roles.map((role) => (
-            <tr key={role.id} className="border-t">
-              <td>
-                <span
-                  className={clsx(
-                    "px-2 py-1 border-b rounded-full text-sm font-semibold ",
-                    role.role === "Admin"
-                      ? "bg-violet-200 text-violet-700"
-                      : role.role === "Editor"
-                      ? "bg-blue-100 text-blue-700"
-                      : role.role === "Viewer"
-                      ? "bg-yellow-200 text-yellow-600 "
-                      : "bg-slate-700 text-slate-200"
-                  )}
-                >
-                  {role.role}
-                </span>
-              </td>
-              <td>{role.permissions.join(", ")}</td>
-              <td className="flex gap-2 py-3">
-                <button onClick={() => handleEditRole(role)}>
-                  <EditIcon height={25} width={25} />
-                </button>
-                <button
-                  onClick={() =>
-                    setRoleToDelete(role.id) || setIsDeletingRole(true)
-                  }
-                >
-                  <DeleteIcon height={25} width={25} />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
 
+      <div className="flex flex-wrap gap-2">
+        <table className="w-fit h-fit bg-white shadow-md rounded-xl overflow-hidden">
+          <thead>
+            <tr>
+              <th>Roles</th>
+              <th>Permissions</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {roles.map((role) => (
+              <tr key={role.id} className="border-t">
+                <td>
+                  <span
+                    className={clsx(
+                      "px-2 py-1 border-b rounded-full text-sm font-semibold ",
+                      role.role === "Admin"
+                        ? "bg-violet-200 text-violet-700"
+                        : role.role === "Editor"
+                        ? "bg-blue-100 text-blue-700"
+                        : role.role === "Viewer"
+                        ? "bg-yellow-200 text-yellow-600 "
+                        : "bg-slate-700 text-slate-200"
+                    )}
+                  >
+                    {role.role}
+                  </span>
+                </td>
+                <td>{role.permissions.join(", ")}</td>
+                <td className="flex gap-2 py-3">
+                  <button onClick={() => handleEditRole(role)}>
+                    <EditIcon height={25} width={25} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setRoleToDelete(role.id);
+                      setIsDeletingRole(true);
+                    }}
+                  >
+                    <DeleteIcon height={25} width={25} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <table className="w-fit h-fit p-4 bg-white shadow-md rounded-xl overflow-hidden">
+          <thead>
+            <tr>
+              <th>Permissions</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {permissions.map((perm) => (
+              <tr key={perm.id} className="border-t">
+                <td>{perm.permission}</td>
+                <td className="flex gap-2">
+                  <button>
+                    <EditIcon height={25} width={25} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setPermissionToDel(perm.id);
+                      setIsDeletingPerm(true);
+                    }}
+                  >
+                    <DeleteIcon height={25} width={25} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {isRoleModalOpen && (
         <RoleModal
           editingRole={editingRole}
@@ -217,12 +266,20 @@ const RoleManagement = () => {
         />
       )}
 
-      {isDeletingRole && (
+      {(isDeletingRole || isDeleltingPerm) && (
         <DeleteModal
-          what={"role"}
-          del={"Role"}
+          what={isDeletingRole ? "role" : "permission"}
+          del={isDeletingRole ? "Role" : "Permission"}
           handleDelete={handleConfirmDeletion}
-          handleCancel={() => setIsDeletingRole(false)}
+          handleCancel={() => {
+            if (isDeletingRole) {
+              setIsDeletingRole(false);
+              setIsDeletingPerm(null);
+            } else {
+              setIsDeletingPerm(false);
+              setIsDeletingRole(null);
+            }
+          }}
         />
       )}
     </div>
