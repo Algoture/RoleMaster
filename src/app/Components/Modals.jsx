@@ -121,7 +121,7 @@ export const EditingModal = ({
 export const PermissionModal = ({ permission, cancel, handleSubmit }) => {
   return (
     <div className="modal">
-      <div className="bg-white p-6 rounded">
+      <div className="bg-white p-6 rounded-lg">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-lg text-center font-medium text-gray-700">
@@ -130,6 +130,7 @@ export const PermissionModal = ({ permission, cancel, handleSubmit }) => {
             <input
               type="text"
               name="name"
+              placeholder="Enter permission"
               defaultValue={permission}
               className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none"
               required
@@ -208,7 +209,7 @@ export const RoleModal = ({
             </button>
             <button
               onClick={handleSubmit}
-              className="bg-accent btn hover:bg-secondary"
+              className="bg-accent btn text-nowrap hover:bg-secondary"
             >
               {editingRole ? "Update Role" : "Add Role"}
             </button>

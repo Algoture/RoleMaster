@@ -69,13 +69,13 @@
       ]
     },
     {
-      "id": "2",
       "role": "Editor",
       "permissions": [
         "Read",
         "Write",
-        "View"
-      ]
+        "Delete"
+      ],
+      "id": "2"
     },
     {
       "role": "Viewer",
