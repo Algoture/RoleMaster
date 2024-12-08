@@ -38,29 +38,27 @@ export default function Home() {
   const totalInActiveUsers = data.filter(
     (user) => user.status === "Inactive"
   ).length;
-  
+
   return (
     <div className="p-4 md:ml-44">
-      <div className="flex flex-wrap  gap-4 bg-gray-50 rounded-lg ">
-        <div className="statsDiv flex flex-col items-center bg-white p-2 rounded-lg shadow-md w-full sm:w-1/4">
-          <h3 className="text-lg font-semibold text-gray-700 text-nowrap">Total Users</h3>
-          <p className="text-2lg font-bold text-accent">{data.length}</p>
+      <div className="flex flex-wrap md:mt-0 mt-12 justify-around gap-4 bg-gray-50 rounded-lg ">
+        <div className="statsDiv">
+          <h3 className="statsH3">Total Users</h3>
+          <p className="statsP text-accent">{data.length}</p>
         </div>
-        <div className="statsDiv flex flex-col items-center bg-white p-2 rounded-lg shadow-md w-full sm:w-1/4">
-          <h3 className="text-lg font-semibold text-gray-700 text-nowrap">
-            Active Users
-          </h3>
-          <p className="text-2lg font-bold text-green-600">
-            {totalActiveUsers}
-          </p>
+        <div className="statsDiv">
+          <h3 className="statsH3">Active Users</h3>
+          <p className="statsP text-green-600">{totalActiveUsers}</p>
         </div>
-        <div className="statsDiv flex flex-col items-center bg-white p-2 rounded-lg shadow-md w-full sm:w-1/4">
-          <h3 className="text-lg font-semibold text-gray-700 text-nowrap">
-            Inactive Users
-          </h3>
-          <p className="text-2lg font-bold text-red-600 text-nowrap">
+        <div className="statsDiv">
+          <h3 className="statsH3">Inactive Users</h3>
+          <p className="statsP text-red-600 text-nowrap">
             {totalInActiveUsers}
           </p>
+        </div>
+        <div className="statsDiv">
+          <h3 className="statsH3">Total Roles</h3>
+          <p className="statsP text-accent">{roles.length}</p>
         </div>
       </div>
 
@@ -78,7 +76,7 @@ export default function Home() {
               const count = data.filter(
                 (user) => user.role === rolesData.role
               ).length;
-              
+
               const permissionCount = rolesData.permissions.length;
               return (
                 <tr key={rolesData.id}>

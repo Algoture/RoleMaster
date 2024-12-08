@@ -46,9 +46,16 @@ input[type="text"] {
 }
 
 .statsDiv {
-  @apply text-2xl text-center w-full sm:w-fit h-fit p-4 bg-white shadow-md rounded-xl overflow-hidden;
+  @apply text-2xl text-center  h-fit p-4 bg-white shadow-md rounded-lg overflow-hidden flex flex-col items-center ;
 }
 
 .statsTD{
   @apply px-6 py-4 border-b border-gray-300 text-left;
+}
+
+.statsH3{
+  @apply text-xl font-semibold text-gray-700 text-nowrap;
+}
+.statsP{
+  @apply text-2xl font-bold;
 }
