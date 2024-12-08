@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
 import { DeleteModal, RoleModal, PermissionModal } from "../Components/Modals";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import clsx from "clsx";
 
 const RoleManagement = () => {

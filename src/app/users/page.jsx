@@ -4,7 +4,7 @@ import { AddIcon, DeleteIcon, EditIcon, SortIcon } from "../Components/Icons";
 import { DeleteModal, EditingModal } from "../Components/Modals";
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "../Components/SearchBar";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import clsx from "clsx";
 
 function UserManagement() {
@@ -216,6 +216,8 @@ function UserManagement() {
                       ? "bg-blue-100 text-blue-700"
                       : user.role === "Viewer"
                       ? "bg-yellow-200 text-yellow-600 "
+                      : user.role === "Owner"
+                      ? ""
                       : "bg-slate-700 text-slate-200"
                   )}
                 >

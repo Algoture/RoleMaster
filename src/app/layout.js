@@ -1,4 +1,4 @@
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
 import { Sidebar } from "./Components/Sidebar";
 import { SidebarProvider } from "./context/SidebarContext";
 import "./globals.css";
@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body className={"antialiased transition-all"}>
         <SidebarProvider>
           <Sidebar />
-          <Toaster position="bottom-left"/>
+          <Toaster position="bottom-left" richColors />
           {children}
         </SidebarProvider>
       </body>
