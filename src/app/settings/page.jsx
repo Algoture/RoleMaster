@@ -220,7 +220,7 @@ const RoleManagement = () => {
             {permissions.map((perm) => (
               <tr key={perm.id} className="border-t">
                 <td>{perm.permission}</td>
-                <td className="flex gap-2">
+                <td>
                   <button
                     onClick={() => {
                       setPermissionToDel(perm.id);
@@ -228,9 +228,6 @@ const RoleManagement = () => {
                     }}
                   >
                     <DeleteIcon height={25} width={25} />
-                  </button>
-                  <button>
-                    <EditIcon height={25} width={25} />
                   </button>
                 </td>
               </tr>
