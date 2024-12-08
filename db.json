@@ -5,7 +5,7 @@
       "name": "John Doe",
       "email": "john@example.com",
       "role": "Admin",
-      "status": "Inactive"
+      "status": "Active"
     },
     {
       "id": "2",
@@ -22,13 +22,6 @@
       "status": "Inactive"
     },
     {
-      "id": "fab8",
-      "name": "Donald Trump",
-      "email": "donaldtrump@gmail.com",
-      "role": "Hacker",
-      "status": "Active"
-    },
-    {
       "id": "c597",
       "name": "Vijay Setupathi",
       "email": "vijaysetupathi@gmail.com",
@@ -40,7 +33,7 @@
       "name": "Robert\tLewis",
       "email": "RobertLewis@hotmail.com",
       "role": "Editor",
-      "status": "Inactive"
+      "status": "Active"
     },
     {
       "id": "6b26",
@@ -50,17 +43,31 @@
       "status": "Active"
     },
     {
-      "id": "35ab",
-      "name": "Elon Musk",
-      "email": "elonmusk@gmail.com",
-      "role": "Owner",
-      "status": "Active"
-    },
-    {
       "id": "b53b",
       "name": "David Miller",
       "email": "DavidMiller@yahoo.com",
       "role": "Editor",
+      "status": "Active"
+    },
+    {
+      "id": "828e",
+      "name": "Steven Evans",
+      "email": "StevenEvans@yahoo.com",
+      "role": "Moderator",
+      "status": "Active"
+    },
+    {
+      "id": "7e67",
+      "name": "Umesh Nagare",
+      "email": "umesh@gmail.com",
+      "role": "Owner",
+      "status": "Active"
+    },
+    {
+      "id": "a391",
+      "name": "Thomas Robinson",
+      "email": "ThomasRobinson@facebook.com",
+      "role": "Guest",
       "status": "Inactive"
     }
   ],
@@ -92,13 +99,6 @@
       "id": "3"
     },
     {
-      "id": "90a3",
-      "role": "Hacker",
-      "permissions": [
-        "Read"
-      ]
-    },
-    {
       "id": "f51f",
       "role": "Owner",
       "permissions": [
@@ -107,6 +107,27 @@
         "Delete",
         "View",
         "Modify",
+        "Post"
+      ]
+    },
+    {
+      "id": "5fc1",
+      "role": "Guest",
+      "permissions": [
+        "Read"
+      ]
+    },
+    {
+      "id": "94ef",
+      "role": "Moderator",
+      "permissions": [
+        "Modify"
+      ]
+    },
+    {
+      "id": "3ea3",
+      "role": "Contributor",
+      "permissions": [
         "Post"
       ]
     }

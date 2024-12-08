@@ -21,7 +21,7 @@ body {
 }
 
 th {
-  @apply text-left px-4 py-2 border-b;
+  @apply text-left px-4 py-2 border-b ;
 }
 
 td {
@@ -33,14 +33,22 @@ input[type="text"] {
   @apply mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none;
 }
 
-.btns{
+.btns {
   @apply flex justify-between w-full gap-2;
 }
 
-.btn{
+.btn {
   @apply text-white w-full px-4 py-2 rounded-lg;
 }
 
-.modal{
+.modal {
   @apply fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50;
+}
+
+.statsDiv {
+  @apply text-2xl text-center w-full sm:w-fit h-fit p-4 bg-white shadow-md rounded-xl overflow-hidden;
+}
+
+.statsTD{
+  @apply px-6 py-4 border-b border-gray-300 text-left;
 }

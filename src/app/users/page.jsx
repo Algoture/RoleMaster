@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { SearchBar } from "../Components/SearchBar";
 import { toast } from "sonner";
 import clsx from "clsx";
-
+import { roleStyles } from "../util";
 function UserManagement() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
@@ -59,6 +59,7 @@ function UserManagement() {
     setFilteredUsers(sortedUsers);
     setSortDirection(sortDirection === "asc" ? "desc" : "asc");
   };
+
   const handleAddUser = () => {
     setIsAdding(true);
     setIsEditing(true);
@@ -149,7 +150,7 @@ function UserManagement() {
   };
 
   return (
-    <div className="p-2 md:ml-44 ">
+    <div className="p-2 md:ml-44">
       <div className="md:p-2 flex my-2 items-center gap-2 justify-between">
         <SearchBar
           handleSearch={(e) => setSearch(e.target.value)}
@@ -186,7 +187,7 @@ function UserManagement() {
             <tr key={user.id}>
               <td className="px-4 py-3 border-b">
                 <div className="flex items-center gap-2">
-                  <p className="w-28 text-nowrap">{user.name}</p>
+                  <p>{user.name}</p>
                   <dd className="sm:hidden">
                     <button
                       onClick={() => handleToggleStatus(user.id)}
@@ -210,15 +211,11 @@ function UserManagement() {
                 <span
                   className={clsx(
                     "px-2 py-1 border-b rounded-full text-sm font-semibold",
-                    user.role === "Admin"
-                      ? "bg-violet-200 text-violet-700"
-                      : user.role === "Editor"
-                      ? "bg-blue-100 text-blue-700"
-                      : user.role === "Viewer"
-                      ? "bg-yellow-200 text-yellow-600 "
-                      : user.role === "Owner"
-                      ? ""
-                      : "bg-slate-700 text-slate-200"
+                    roleStyles[user.role]
+                      ? `${roleStyles[user.role].bg} ${
+                          roleStyles[user.role].text
+                        }`
+                      : `${roleStyles.Default.bg} ${roleStyles.Default.text}`
                   )}
                 >
                   {user.role}

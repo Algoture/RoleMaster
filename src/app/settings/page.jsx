@@ -4,7 +4,7 @@ import { AddIcon, DeleteIcon, EditIcon } from "../Components/Icons";
 import { DeleteModal, RoleModal, PermissionModal } from "../Components/Modals";
 import { toast } from "sonner";
 import clsx from "clsx";
-
+import { roleStyles } from "../util";
 const RoleManagement = () => {
   const [roles, setRoles] = useState([]);
   const [permissions, setPermissions] = useState([]);
@@ -181,13 +181,11 @@ const RoleManagement = () => {
                   <span
                     className={clsx(
                       "px-2 py-1 border-b rounded-full text-sm font-semibold ",
-                      role.role === "Admin"
-                        ? "bg-violet-200 text-violet-700"
-                        : role.role === "Editor"
-                        ? "bg-blue-100 text-blue-700"
-                        : role.role === "Viewer"
-                        ? "bg-yellow-200 text-yellow-600 "
-                        : "bg-slate-700 text-slate-200"
+                      roleStyles[role.role]
+                        ? `${roleStyles[role.role].bg} ${
+                            roleStyles[role.role].text
+                          }`
+                        : `${roleStyles.Default.bg} ${roleStyles.Default.text}`
                     )}
                   >
                     {role.role}
