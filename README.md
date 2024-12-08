@@ -189,6 +189,12 @@ RoleMaster includes mock API simulation to validate CRUD operations:
 
 -  **Permission Management API**: Enables testing permission assignment and removal functionalities.
 
+### 5. **Sidebar Navigation**
+Effortlessly navigate between pages with a responsive sidebar.
+-  **Dashboard**: Quick access to system metrics and role statistics.
+-  **Users**: Navigate to the user management screen.
+-  **Settings**: Access system and role management configurations.
+
 
 ## Dashboard Overview
 
@@ -208,18 +214,6 @@ The **Admin Panel Dashboard** provides administrators with a high-level summary 
   - **Users Count**: Number of users assigned to each role.
   - **Permissions Count**: Total number of permissions associated with each role.
 - Color-coded labels for roles enhance visual clarity.
-
-#### **3. Sidebar Navigation**
-- **Dashboard**: Quick access to system metrics and role statistics.
-- **Users**: Navigate to the user management screen.
-- **Settings**: Access system and role management configurations.
-
-#### **4. Responsive Design**
-- The dashboard layout is optimized for multiple devices, ensuring seamless usability across desktops, tablets, and mobile devices.
-
-#### **5. User-Friendly Design**
-- A clean and minimalistic design ensures ease of navigation and an enhanced user experience.
-- Consistent color schemes and typography improve readability and accessibility.
 
 ---
   
