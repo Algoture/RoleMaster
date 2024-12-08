@@ -11,7 +11,7 @@ RoleMaster is a powerful admin panel designed to streamline role-based access co
 
 ---
 
-**This project currently supports light mode only. Please ensure that your system theme is set to light mode to avoid any UI inconsistencies.** 
+***This project currently supports light mode only. Please ensure that your system theme is set to light mode to avoid any UI inconsistencies.*** 
 
 #  Getting Started with RoleMaster
 
