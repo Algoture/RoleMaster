@@ -150,9 +150,10 @@ function UserManagement() {
   };
 
   return (
-    <div className="p-2 md:ml-44">
-      <div className="md:p-2 flex my-2 items-center gap-2 justify-between">
+    <div className="p-4 md:ml-44">
+      <div className="flex items-center gap-2 justify-between">
         <SearchBar
+          placeholder={"Search by name or email.."}
           handleSearch={(e) => setSearch(e.target.value)}
           search={search}
         />
@@ -165,8 +166,8 @@ function UserManagement() {
         </button>
       </div>
 
-      <table className="min-w-full bg-clip-border shadow-lg rounded-lg mt-2 table-auto text-left border-collapse">
-        <thead>
+      <table className="min-w-full bg-clip-border shadow-md rounded-lg mt-2 table-auto text-left border-collapse">
+        <thead className="bg-thead">
           <tr>
             <th className="rounded-tl-lg ">Name</th>
             <th className="hidden lg:table-cell">Email</th>
@@ -185,7 +186,7 @@ function UserManagement() {
         <tbody>
           {filteredUsers.map((user) => (
             <tr key={user.id}>
-              <td className="px-4 py-3 border-b">
+              <td className="px-4 py-3 border-b-2">
                 <div className="flex items-center gap-2">
                   <p>{user.name}</p>
                   <dd className="sm:hidden">
@@ -204,10 +205,10 @@ function UserManagement() {
                   <dd>{user.email}</dd>
                 </dl>
               </td>
-              <td className="px-4 py-3 border-b hidden lg:table-cell">
+              <td className="px-4 py-3 border-b-2 hidden lg:table-cell">
                 {user.email}
               </td>
-              <td className="px-4 py-2 border-b">
+              <td className="px-4 py-2 border-b-2">
                 <span
                   className={clsx(
                     "px-2 py-1 border-b rounded-full text-sm font-semibold",
@@ -221,7 +222,7 @@ function UserManagement() {
                   {user.role}
                 </span>
               </td>
-              <td className="px-2 py-1 border-b hidden sm:table-cell">
+              <td className="px-2 py-1 border-b-2 hidden sm:table-cell">
                 <button
                   onClick={() => handleToggleStatus(user.id)}
                   className={clsx(
@@ -238,7 +239,7 @@ function UserManagement() {
                   {user.status}
                 </button>
               </td>
-              <td className="border-b flex gap-2 py-3">
+              <td className="border-b-2 flex gap-2 py-3">
                 <button
                   onClick={() => setUserToDelete(user) || setIsDeleting(true)}
                 >

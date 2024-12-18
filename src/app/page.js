@@ -41,30 +41,30 @@ export default function Home() {
 
   return (
     <div className="p-4 md:ml-44">
-      <div className="flex flex-wrap md:mt-0 mt-12 justify-around gap-4 bg-gray-50 rounded-lg ">
+      <div className="flex flex-wrap md:mt-0 mt-12 justify-between gap-4 bg-gray-50 rounded-lg">
         <div className="statsDiv">
           <h3 className="statsH3">Total Users</h3>
-          <p className="statsP text-accent">{data.length}</p>
+          <p className="statsP ">{data.length}</p>
         </div>
         <div className="statsDiv">
           <h3 className="statsH3">Active Users</h3>
-          <p className="statsP text-green-600">{totalActiveUsers}</p>
+          <p className="statsP ">{totalActiveUsers}</p>
         </div>
         <div className="statsDiv">
           <h3 className="statsH3">Inactive Users</h3>
-          <p className="statsP text-red-600 text-nowrap">
+          <p className="statsP text-nowrap">
             {totalInActiveUsers}
           </p>
         </div>
         <div className="statsDiv">
           <h3 className="statsH3">Total Roles</h3>
-          <p className="statsP text-accent">{roles.length}</p>
+          <p className="statsP">{roles.length}</p>
         </div>
       </div>
 
       <div className="mt-4 ">
-        <table className="min-w-full bg-clip-border shadow-lg rounded-lg mt-2 table-auto text-left border-collapse">
-          <thead>
+        <table className="min-w-full bg-clip-border shadow-md rounded-lg mt-2 table-auto text-left border-collapse">
+          <thead className="bg-thead">
             <tr>
               <th className="rounded-tl-lg">Role</th>
               <th>Users Count</th>
@@ -95,7 +95,7 @@ export default function Home() {
                     </span>
                   </td>
                   <td className="statsTD">
-                    <span className="text-lg ">{count}</span>
+                    <span className="text-lg">{count}</span>
                   </td>
                   <td className="statsTD">
                     <span className="text-lg ">{permissionCount}</span>
