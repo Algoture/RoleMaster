@@ -159,14 +159,14 @@ const RoleManagement = () => {
         <div className="flex md:justify-center sm:w-fit w-full justify-between items-center">
           <button
             onClick={() => setIsRoleModalOpen(true)}
-            className="bg-accent text-nowrap flex items-center text-white p-2 rounded-lg"
+            className="bg-primary text-nowrap shadow-sh flex items-center  p-2 rounded-lg"
           >
             <AddIcon height={20} width={20} />
             Add Role
           </button>
           <button
             onClick={() => setIsPermissionModalOpen(true)}
-            className="ml-2 flex items-center bg-accent text-nowrap text-white p-2 rounded-lg"
+            className="ml-2 flex items-center shadow-sh bg-primary text-nowrap  p-2 rounded-lg"
           >
             <AddIcon height={20} width={20} />
             Add Permission

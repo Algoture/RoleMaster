@@ -159,7 +159,7 @@ function UserManagement() {
         />
         <button
           onClick={handleAddUser}
-          className="flex items-center text-nowrap justify-center gap-2 bg-accent text-white px-4 py-2 rounded-lg 
+          className="flex items-center text-nowrap justify-center gap-2 shadow-sh bg-primary px-4 py-2 rounded-lg 
               sm:ml-auto sm:mr-0 mx-auto sm:static"
         >
           <AddIcon height={20} width={20} /> Add User
