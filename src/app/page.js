@@ -43,22 +43,22 @@ export default function Home() {
     <div className="p-4 md:ml-44">
       <div className="flex flex-wrap justify-between md:mt-0 mt-10 gap-4 bg-gray-50 rounded-lg">
         <div className="statsDiv">
-          <h3 className="statsH3">Total Users</h3>
           <p className="statsP ">{data.length}</p>
+          <h3 className="statsH3">Total Users</h3>
         </div>
         <div className="statsDiv">
-          <h3 className="statsH3">Active Users</h3>
           <p className="statsP ">{totalActiveUsers}</p>
+          <h3 className="statsH3">Active Users</h3>
         </div>
         <div className="statsDiv">
-          <h3 className="statsH3">Inactive Users</h3>
           <p className="statsP text-nowrap">
             {totalInActiveUsers}
           </p>
+          <h3 className="statsH3">Inactive Users</h3>
         </div>
         <div className="statsDiv">
-          <h3 className="statsH3">Total Roles</h3>
           <p className="statsP">{roles.length}</p>
+          <h3 className="statsH3">Total Roles</h3>
         </div>
       </div>
 

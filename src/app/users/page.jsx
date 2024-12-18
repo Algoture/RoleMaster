@@ -240,15 +240,25 @@ function UserManagement() {
                 </button>
               </td>
               <td className="border-b-2 flex gap-2 py-3">
-                <button
-                  className="text-red-500"
-                  onClick={() => setUserToDelete(user) || setIsDeleting(true)}
-                >
-                  <DeleteIcon height={25} width={25} />
-                </button>
-                <button onClick={() => handleEditUser(user)}>
-                  <EditIcon height={25} width={25} />
-                </button>
+                <div className="has-tooltip">
+                  <button
+                    className="text-red-500"
+                    onClick={() => setUserToDelete(user) || setIsDeleting(true)}
+                  >
+                    <DeleteIcon height={25} width={25} />
+                  </button>
+                  <span className="tooltip rounded shadow-sh py-1 px-2 bg-slate-900 text-white -mt-9 -ml-2">
+                    Delete User
+                  </span>
+                </div>
+                <div className="has-tooltip">
+                  <button onClick={() => handleEditUser(user)}>
+                    <EditIcon height={25} width={25} />
+                  </button>
+                  <span className="tooltip rounded shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
+                    Edit User
+                  </span>
+                </div>
               </td>
             </tr>
           ))}

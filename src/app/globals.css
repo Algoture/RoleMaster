@@ -54,8 +54,15 @@ input[type="text"] {
 }
 
 .statsH3{
-  @apply text-xl font-semibold text-gray-500 text-nowrap;
+  @apply text-base font-semibold text-gray-500 text-nowrap;
 }
 .statsP{
   @apply text-2xl font-bold;
+}
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
 }

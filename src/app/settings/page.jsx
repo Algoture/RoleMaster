@@ -202,18 +202,29 @@ const RoleManagement = () => {
                 </td>
                 <td>{role.permissions.join(", ")}</td>
                 <td className="flex gap-2 py-3">
-                  <button
-                    className="text-red-500"
-                    onClick={() => {
-                      setRoleToDelete(role.id);
-                      setIsDeletingRole(true);
-                    }}
-                  >
-                    <DeleteIcon height={25} width={25} />
-                  </button>
-                  <button onClick={() => handleEditRole(role)}>
-                    <EditIcon height={25} width={25} />
-                  </button>
+                  <div className="has-tooltip">
+                    <button
+                      className="text-red-500"
+                      onClick={() => {
+                        setRoleToDelete(role.id);
+                        setIsDeletingRole(true);
+                      }}
+                    >
+                      <DeleteIcon height={25} width={25} />
+                    </button>
+                    <span className="tooltip rounded shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
+                      Delete Role
+                    </span>
+                  </div>
+
+                  <div className="has-tooltip">
+                    <button onClick={() => handleEditRole(role)}>
+                      <EditIcon height={25} width={25} />
+                    </button>
+                    <span className="tooltip rounded shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
+                      Edit Role
+                    </span>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -231,15 +242,20 @@ const RoleManagement = () => {
               <tr key={perm.id} className="border-t">
                 <td>{perm.permission}</td>
                 <td className="text-center">
-                  <button
-                    className="text-red-500"
-                    onClick={() => {
-                      setPermissionToDel(perm.id);
-                      setIsDeletingPerm(true);
-                    }}
-                  >
-                    <DeleteIcon height={25} width={25} />
-                  </button>
+                  <div className="has-tooltip">
+                    <button
+                      className="text-red-500"
+                      onClick={() => {
+                        setPermissionToDel(perm.id);
+                        setIsDeletingPerm(true);
+                      }}
+                    >
+                      <DeleteIcon height={25} width={25} />
+                    </button>
+                    <span className="tooltip rounded shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
+                      Delete Permission
+                    </span>
+                  </div>
                 </td>
               </tr>
             ))}
