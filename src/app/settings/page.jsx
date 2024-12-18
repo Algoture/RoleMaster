@@ -203,6 +203,7 @@ const RoleManagement = () => {
                 <td>{role.permissions.join(", ")}</td>
                 <td className="flex gap-2 py-3">
                   <button
+                    className="text-red-500"
                     onClick={() => {
                       setRoleToDelete(role.id);
                       setIsDeletingRole(true);
@@ -229,8 +230,9 @@ const RoleManagement = () => {
             {permissions.map((perm) => (
               <tr key={perm.id} className="border-t">
                 <td>{perm.permission}</td>
-                <td>
+                <td className="text-center">
                   <button
+                    className="text-red-500"
                     onClick={() => {
                       setPermissionToDel(perm.id);
                       setIsDeletingPerm(true);

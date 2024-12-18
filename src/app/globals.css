@@ -38,7 +38,7 @@ input[type="text"] {
 }
 
 .btn {
-  @apply text-white w-full px-4 py-2 rounded-lg;
+  @apply text-white w-full px-4 py-2 rounded-lg shadow-sh;
 }
 
 .modal {

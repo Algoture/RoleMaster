@@ -241,6 +241,7 @@ function UserManagement() {
               </td>
               <td className="border-b-2 flex gap-2 py-3">
                 <button
+                  className="text-red-500"
                   onClick={() => setUserToDelete(user) || setIsDeleting(true)}
                 >
                   <DeleteIcon height={25} width={25} />
