@@ -54,7 +54,7 @@ input[type="text"] {
 }
 
 .statsH3{
-  @apply text-xl font-semibold text-gray-700 text-nowrap;
+  @apply text-xl font-semibold text-gray-500 text-nowrap;
 }
 .statsP{
   @apply text-2xl font-bold;
