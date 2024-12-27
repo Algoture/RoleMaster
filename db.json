@@ -4,6 +4,7 @@
       "id": "1",
       "name": "John Doe",
       "email": "john@example.com",
+      "course": "UI/UX",
       "role": "Admin",
       "status": "Active"
     },
@@ -11,6 +12,7 @@
       "id": "2",
       "name": "Jane Smith",
       "email": "jane@example.com",
+      "course": "Full Stack",
       "role": "Editor",
       "status": "Active"
     },
@@ -18,6 +20,7 @@
       "id": "3",
       "name": "Alice Johnson",
       "email": "alice@example.com",
+      "course": "Data Science",
       "role": "Viewer",
       "status": "Inactive"
     },
@@ -25,6 +28,7 @@
       "id": "c597",
       "name": "Vijay Setupathi",
       "email": "vijaysetupathi@gmail.com",
+      "course": "Blockchain",
       "role": "Editor",
       "status": "Active"
     },
@@ -32,6 +36,7 @@
       "id": "c993",
       "name": "Robert\tLewis",
       "email": "RobertLewis@hotmail.com",
+      "course": "UI/UX",
       "role": "Editor",
       "status": "Active"
     },
@@ -39,6 +44,7 @@
       "id": "6b26",
       "name": "Anthony Lopez",
       "email": "AnthonyLopez@gmail.com",
+      "course": "Cyber Security",
       "role": "Viewer",
       "status": "Active"
     },
@@ -46,6 +52,7 @@
       "id": "b53b",
       "name": "David Miller",
       "email": "DavidMiller@yahoo.com",
+      "course": "IOT",
       "role": "Editor",
       "status": "Active"
     },
@@ -53,6 +60,7 @@
       "id": "828e",
       "name": "Steven Evans",
       "email": "StevenEvans@yahoo.com",
+      "course": "Full Stack",
       "role": "Moderator",
       "status": "Active"
     },
@@ -60,6 +68,7 @@
       "id": "7e67",
       "name": "Umesh Nagare",
       "email": "umesh@gmail.com",
+      "course": "UI/UX",
       "role": "Owner",
       "status": "Active"
     },
@@ -67,69 +76,54 @@
       "id": "a391",
       "name": "Thomas Robinson",
       "email": "ThomasRobinson@facebook.com",
+      "course": "Devops",
       "role": "Guest",
       "status": "Inactive"
+    },
+    {
+      "id": "b421",
+      "name": "Jeorge Robinson",
+      "email": "JeorgeRobinson@facebook.com",
+      "course": "IOT",
+      "role": "Viewer",
+      "status": "Active"
     }
   ],
   "roles": [
     {
       "id": "1",
       "role": "Admin",
-      "permissions": [
-        "Read",
-        "Write",
-        "Delete",
-        "View"
-      ]
+      "permissions": ["Read", "Write", "Delete", "View"]
     },
     {
       "role": "Editor",
-      "permissions": [
-        "Read",
-        "Write",
-        "Delete"
-      ],
+      "permissions": ["Read", "Write", "Delete"],
       "id": "2"
     },
     {
       "role": "Viewer",
-      "permissions": [
-        "View"
-      ],
+      "permissions": ["View"],
       "id": "3"
     },
     {
       "id": "f51f",
       "role": "Owner",
-      "permissions": [
-        "Read",
-        "Write",
-        "Delete",
-        "View",
-        "Modify",
-        "Post"
-      ]
+      "permissions": ["Read", "Write", "Delete", "View", "Modify", "Post"]
     },
     {
       "id": "5fc1",
       "role": "Guest",
-      "permissions": [
-        "Read"
-      ]
+      "permissions": ["Read"]
     },
     {
       "id": "94ef",
       "role": "Moderator",
-      "permissions": [
-        "Modify"
-      ]
+      "permissions": ["Modify"]
     },
     {
       "id": "3ea3",
       "role": "Contributor",
-      "permissions": [
-        "Post"
-      ]
+      "permissions": ["Post"]
     }
   ],
   "permissions": [

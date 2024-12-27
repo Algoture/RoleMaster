@@ -172,6 +172,7 @@ function UserManagement() {
             <th className="rounded-tl-lg ">Name</th>
             <th className="hidden lg:table-cell">Email</th>
             <th>Role</th>
+            <th>Course</th>
             <th className="theader hidden sm:table-cell ">
               <div className="flex items-center gap-1">
                 Status
@@ -222,7 +223,8 @@ function UserManagement() {
                   {user.role}
                 </span>
               </td>
-              <td className="px-2 py-1 border-b-2 hidden sm:table-cell">
+              <td className="px-4 py-2 border-b-2">{user.course}</td>
+              <td className="p-2 border-b-2 hidden sm:table-cell">
                 <button
                   onClick={() => handleToggleStatus(user.id)}
                   className={clsx(
@@ -239,7 +241,7 @@ function UserManagement() {
                   {user.status}
                 </button>
               </td>
-              <td className="border-b-2 flex gap-2 py-3">
+              <td className="border-b-2 flex  gap-2 py-2.5">
                 <div className="has-tooltip">
                   <button
                     className="text-red-500"
@@ -247,7 +249,7 @@ function UserManagement() {
                   >
                     <DeleteIcon height={25} width={25} />
                   </button>
-                  <span className="tooltip rounded shadow-sh py-1 px-2 bg-slate-900 text-white -mt-9 -ml-2">
+                  <span className="tooltip rounded shadow-sh py-1 px-2 bg-slate-900 text-white -mt-9 ">
                     Delete User
                   </span>
                 </div>
