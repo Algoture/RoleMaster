@@ -93,37 +93,61 @@
     {
       "id": "1",
       "role": "Admin",
-      "permissions": ["Read", "Write", "Delete", "View"]
+      "permissions": [
+        "Read",
+        "Write",
+        "Delete",
+        "View"
+      ]
     },
     {
       "role": "Editor",
-      "permissions": ["Read", "Write", "Delete"],
+      "permissions": [
+        "Read",
+        "Write",
+        "Delete"
+      ],
       "id": "2"
     },
     {
       "role": "Viewer",
-      "permissions": ["View"],
+      "permissions": [
+        "View"
+      ],
       "id": "3"
     },
     {
       "id": "f51f",
       "role": "Owner",
-      "permissions": ["Read", "Write", "Delete", "View", "Modify", "Post"]
+      "permissions": [
+        "Read",
+        "Write",
+        "Delete",
+        "View",
+        "Modify",
+        "Post"
+      ]
     },
     {
       "id": "5fc1",
       "role": "Guest",
-      "permissions": ["Read"]
+      "permissions": [
+        "Read"
+      ]
     },
     {
       "id": "94ef",
       "role": "Moderator",
-      "permissions": ["Modify"]
+      "permissions": [
+        "Modify"
+      ]
     },
     {
       "id": "3ea3",
       "role": "Contributor",
-      "permissions": ["Post"]
+      "permissions": [
+        "Post"
+      ]
     }
   ],
   "permissions": [
