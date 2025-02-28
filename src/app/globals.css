@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --color-secondary: #352f36;
@@ -9,19 +9,11 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --shadow-sh:
-    0px 2px 3px -1px rgba(0, 0, 0, 0.1), 0px 1px 0px 0px rgba(25, 28, 33, 0.02),
+  --shadow-sh: 0px 2px 3px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 0px 0px rgba(25, 28, 33, 0.02),
     0px 0px 0px 1px rgba(25, 28, 33, 0.08);
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
@@ -47,13 +39,13 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Inter",sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 th {
   text-align: left;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid #e5e7eb; /* Tailwind's border-b */
+  border-bottom: 1px solid #e5e7eb;
 }
 
 td {
@@ -62,12 +54,12 @@ td {
 
 input[type="email"],
 input[type="text"] {
-  margin-top: 0.25rem; /* Tailwind's mt-1 */
+  margin-top: 0.25rem;
   display: block;
   width: 100%;
   padding: 0.5rem 1rem;
-  border: 1px solid #e5e7eb; /* Default Tailwind border color */
-  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
   outline: none;
 }
 
@@ -82,8 +74,8 @@ input[type="text"] {
   color: white;
   width: 100%;
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem; /* Tailwind's rounded-lg */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Approximate Tailwind's shadow-sh */
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .modal {
@@ -92,7 +84,7 @@ input[type="text"] {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(107, 114, 128, 0.5); /* Tailwind's bg-gray-500 bg-opacity-50 */
+  background-color: rgba(107, 114, 128, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,12 +92,12 @@ input[type="text"] {
 }
 
 .statsDiv {
-  font-size: 1.5rem; /* Tailwind's text-2xl */
+  font-size: 1.5rem;
   text-align: center;
   height: fit-content;
   padding: 1rem;
   background-color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tailwind's shadow-md */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   overflow: hidden;
   display: flex;
@@ -115,19 +107,19 @@ input[type="text"] {
 
 .statsTD {
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid #d1d5db; /* Tailwind's border-gray-300 */
+  border-bottom: 1px solid #d1d5db;
   text-align: left;
 }
 
 .statsH3 {
-  font-size: 1rem; /* Tailwind's text-base */
-  font-weight: 600; /* Tailwind's font-semibold */
-  color: #6b7280; /* Tailwind's text-gray-500 */
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280;
   white-space: nowrap;
 }
 
 .statsP {
-  font-size: 1.5rem; /* Tailwind's text-2xl */
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
