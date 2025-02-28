@@ -212,7 +212,7 @@ const RoleManagement = () => {
                     >
                       <DeleteIcon height={25} width={25} />
                     </button>
-                    <span className="tooltip rounded shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
+                    <span className="tooltip rounded-sm shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
                       Delete Role
                     </span>
                   </div>
@@ -221,7 +221,7 @@ const RoleManagement = () => {
                     <button onClick={() => handleEditRole(role)}>
                       <EditIcon height={25} width={25} />
                     </button>
-                    <span className="tooltip rounded shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
+                    <span className="tooltip rounded-sm shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
                       Edit Role
                     </span>
                   </div>
@@ -252,7 +252,7 @@ const RoleManagement = () => {
                     >
                       <DeleteIcon height={25} width={25} />
                     </button>
-                    <span className="tooltip rounded shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
+                    <span className="tooltip rounded-sm shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
                       Delete Permission
                     </span>
                   </div>

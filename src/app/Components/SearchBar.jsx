@@ -12,7 +12,7 @@ export const SearchBar = ({ handleSearch, search = "", placeholder }) => {
         placeholder={placeholder}
         onChange={handleSearch}
         defaultValue={search || ""}
-        className="outline-none bg-transparent border-none placeholder-slate-500 text-gray-600 text-left -ml-3 "
+        className="outline-hidden bg-transparent border-none placeholder-slate-500 text-gray-600 text-left -ml-3 "
       />
     </div>
   );

@@ -80,7 +80,7 @@ export const EditingModal = ({
             <select
               name="status"
               defaultValue={status}
-              className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none"
+              className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-hidden"
               required
             >
               <option value="Active">Active</option>
@@ -94,7 +94,7 @@ export const EditingModal = ({
             <select
               name="role"
               defaultValue={role}
-              className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none"
+              className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-hidden"
               required
             >
               {roles.map((data) => (
@@ -132,7 +132,7 @@ export const PermissionModal = ({ permission, cancel, handleSubmit }) => {
               name="name"
               placeholder="Enter permission"
               defaultValue={permission}
-              className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none"
+              className="mt-1 block w-full px-4 py-2 border rounded-md focus:outline-hidden"
               required
             />
           </div>

@@ -249,7 +249,7 @@ function UserManagement() {
                   >
                     <DeleteIcon height={25} width={25} />
                   </button>
-                  <span className="tooltip rounded shadow-sh py-1 px-2 bg-slate-900 text-white -mt-9 ">
+                  <span className="tooltip rounded-sm shadow-sh py-1 px-2 bg-slate-900 text-white -mt-9 ">
                     Delete User
                   </span>
                 </div>
@@ -257,7 +257,7 @@ function UserManagement() {
                   <button onClick={() => handleEditUser(user)}>
                     <EditIcon height={25} width={25} />
                   </button>
-                  <span className="tooltip rounded shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
+                  <span className="tooltip rounded-sm shadow-lg py-1 px-2 bg-slate-900 text-white -mt-9 -ml-8">
                     Edit User
                   </span>
                 </div>

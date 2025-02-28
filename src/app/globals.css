@@ -1,6 +1,36 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-secondary: #352f36;
+  --color-primary: #f4ce14;
+  --color-primary2: #f8f8ff;
+  --color-accent: #5928e5;
+  --color-thead: #e2e8f0;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --shadow-sh:
+    0px 2px 3px -1px rgba(0, 0, 0, 0.1), 0px 1px 0px 0px rgba(25, 28, 33, 0.02),
+    0px 0px 0px 1px rgba(25, 28, 33, 0.08);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 :root {
   --background: #f8f8ff;
@@ -21,48 +51,92 @@ body {
 }
 
 th {
-  @apply text-left px-4 py-2 border-b ;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e5e7eb; /* Tailwind's border-b */
 }
 
 td {
-  @apply px-4 py-2;
+  padding: 0.5rem 1rem;
 }
 
 input[type="email"],
 input[type="text"] {
-  @apply mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none;
+  margin-top: 0.25rem; /* Tailwind's mt-1 */
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb; /* Default Tailwind border color */
+  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  outline: none;
 }
 
 .btns {
-  @apply flex justify-between w-full gap-2;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.5rem;
 }
 
 .btn {
-  @apply text-white w-full px-4 py-2 rounded-lg shadow-sh;
+  color: white;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem; /* Tailwind's rounded-lg */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Approximate Tailwind's shadow-sh */
 }
 
 .modal {
-  @apply fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(107, 114, 128, 0.5); /* Tailwind's bg-gray-500 bg-opacity-50 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
 }
 
 .statsDiv {
-  @apply text-2xl text-center  h-fit p-4 bg-white shadow-md rounded-lg overflow-hidden flex flex-col items-center ;
+  font-size: 1.5rem; /* Tailwind's text-2xl */
+  text-align: center;
+  height: fit-content;
+  padding: 1rem;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tailwind's shadow-md */
+  border-radius: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.statsTD{
-  @apply px-6 py-4 border-b border-gray-300 text-left;
+.statsTD {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #d1d5db; /* Tailwind's border-gray-300 */
+  text-align: left;
 }
 
-.statsH3{
-  @apply text-base font-semibold text-gray-500 text-nowrap;
+.statsH3 {
+  font-size: 1rem; /* Tailwind's text-base */
+  font-weight: 600; /* Tailwind's font-semibold */
+  color: #6b7280; /* Tailwind's text-gray-500 */
+  white-space: nowrap;
 }
-.statsP{
-  @apply text-2xl font-bold;
+
+.statsP {
+  font-size: 1.5rem; /* Tailwind's text-2xl */
+  font-weight: bold;
 }
+
 .tooltip {
-  @apply invisible absolute;
+  visibility: hidden;
+  position: absolute;
 }
 
 .has-tooltip:hover .tooltip {
-  @apply visible z-50;
+  visibility: visible;
+  z-index: 50;
 }
